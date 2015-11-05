@@ -44,9 +44,10 @@
 
             </android.support.design.widget.TextInputLayout>
             <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/email_sign_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BootstrapButton"
+                android:text="@string/action_sign_in"
                 app:bootstrapBrand="success"
                 app:bootstrapSize="lg"
                 app:buttonMode="regular"
@@ -54,10 +55,10 @@
                 app:roundedCorners="true"
                 />
 
-            <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+            <!--<Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"-->
+                <!--android:layout_width="match_parent" android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="16dp" android:text="@string/action_sign_in"-->
+                <!--android:textStyle="bold" />-->
 
         </LinearLayout>
     </ScrollView>
