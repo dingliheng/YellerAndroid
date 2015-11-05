@@ -21,7 +21,14 @@
 
         <LinearLayout android:id="@+id/email_login_form" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:orientation="vertical">
-
+            <com.beardedhen.androidbootstrap.BootstrapLabel
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:bootstrapBrand="primary"
+                app:bootstrapHeading="h1"
+                app:roundedCorners="true"
+                android:text="Yeller"
+                />
             <android.support.design.widget.TextInputLayout android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -48,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_sign_in"
-                app:bootstrapBrand="success"
+                app:bootstrapBrand="primary"
                 app:bootstrapSize="lg"
                 app:buttonMode="regular"
                 app:showOutline="false"
