@@ -35,8 +35,10 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
+ * Created by yusun on 11/2/15.
  * A login screen that offers login via email/password.
  */
+
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     /**
