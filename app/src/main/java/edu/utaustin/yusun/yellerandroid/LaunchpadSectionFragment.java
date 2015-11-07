@@ -80,7 +80,7 @@ public class LaunchpadSectionFragment extends Fragment {
         });
 
         final BootstrapButton photo_button = (BootstrapButton) rootView.findViewById(R.id.photo_button);
-        mood_button.setOnClickListener(new View.OnClickListener() {
+        photo_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectImage();
@@ -148,7 +148,9 @@ public class LaunchpadSectionFragment extends Fragment {
             e.printStackTrace();
         }
 
-        ivImage.setImageBitmap(thumbnail);
+        Intent intent = new Intent(getContext(), UploadImageActivity.class);
+        intent.putExtra(BITMAPIMAGE, thumbnail);
+        startActivity(intent);
     }
 
     @SuppressWarnings("deprecation")
@@ -178,7 +180,7 @@ public class LaunchpadSectionFragment extends Fragment {
         Intent intent = new Intent(getContext(), UploadImageActivity.class);
         intent.putExtra(BITMAPIMAGE, bm);
         startActivity(intent);
-//        ivImage.setImageBitmap(bm);
+
     }
 }
 
