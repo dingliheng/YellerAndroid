@@ -71,6 +71,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/demo_external_activity" />
+        <edu.utaustin.yusun.yellerandroid.PullToRefreshListView
+            android:id="@+id/pull_to_refresh_listview"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:background="@android:color/white"
+            android:cacheColorHint="@android:color/white" />
 
     </LinearLayout>
 

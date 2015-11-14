@@ -21,3 +21,11 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    isLibrary = true
+    pomPackaging = "aar"
+    pomArtifactId = "PullToRefresh-ListView"
+    pomName = "Android 'Pull to Refresh' ListView library"
+    pomDescription = 'A generic, customizable, open source Android ListView implementation that has "Pull to Refresh" functionality. This ListView can be used as a replacement of the normal Android android.widget.ListView class.'
+}
