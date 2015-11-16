@@ -282,6 +282,7 @@ public class LaunchpadSectionFragment extends Fragment {
             public TextView name;
         }
 
+
         /**
          * Loads the data.
          */
@@ -294,22 +295,7 @@ public class LaunchpadSectionFragment extends Fragment {
             items.add("Ajax Amsterdam");
             items.add("Barcelona");
             items.add("Manchester United");
-            items.add("Chelsea");
-            items.add("Real Madrid");
-            items.add("Bayern Munchen");
-            items.add("Internazionale");
-            items.add("Valencia");
-            items.add("Arsenal");
-            items.add("AS Roma");
-            items.add("Tottenham Hotspur");
-            items.add("PSV");
-            items.add("Olympique Lyon");
-            items.add("AC Milan");
-            items.add("Dortmund");
-            items.add("Schalke 04");
-            items.add("Twente");
-            items.add("Porto");
-            items.add("Juventus");
+
 
 
             // MANDATORY: Notify that the data has changed
@@ -344,7 +330,7 @@ public class LaunchpadSectionFragment extends Fragment {
             if (convertView == null){
                 rowView = inflater.inflate(R.layout.list_item,null);
 
-                viewHolder.name = (TextView) rowView.findViewById(R.id.textView1);
+                viewHolder.name = (TextView) rowView.findViewById(R.id.name);
 
                 rowView.setTag(viewHolder);
             }
@@ -352,6 +338,25 @@ public class LaunchpadSectionFragment extends Fragment {
             final ViewHolder holder = (ViewHolder) rowView.getTag();
 
             holder.name.setText(record);
+
+            TextView name = (TextView) rowView.findViewById(R.id.name);
+            name.setText("Yu Sun");
+            TextView timestamp = (TextView) rowView
+                    .findViewById(R.id.timestamp);
+            timestamp.setText("15min");
+
+            TextView statusMsg = (TextView) rowView
+                    .findViewById(R.id.txtStatusMsg);
+            statusMsg.setText("I love Christmas!!!!");
+
+            ImageView profilePic = (ImageView) rowView
+                    .findViewById(R.id.profilePic);
+            profilePic.setImageResource(R.mipmap.avatar);
+
+            ImageView feedImageView = (ImageView) rowView
+                    .findViewById(R.id.feedImage1);
+            feedImageView.setImageResource(R.mipmap.christmas);
+
 
             return rowView;
         }
