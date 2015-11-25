@@ -1,4 +1,4 @@
-package edu.utaustin.yusun.yellerandroid.edu.utaustin.yusun.yellerandroid.data;
+package edu.utaustin.yusun.yellerandroid.data;
 
 /**
  * Created by yusun on 11/15/15.
