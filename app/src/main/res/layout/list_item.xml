@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/feed_bg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-
         android:layout_marginLeft="@dimen/feed_item_margin"
         android:layout_marginRight="@dimen/feed_item_margin"
         android:layout_marginTop="@dimen/feed_item_margin"
@@ -66,6 +66,7 @@
             android:paddingTop="@dimen/feed_item_status_pad_top" />
 
 
+
         <ImageView
             android:id="@+id/feedImage1"
             android:layout_width="match_parent"
@@ -74,6 +75,36 @@
             android:scaleType="fitXY"
             android:visibility="visible" >
         </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/feed_item_margin">
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/feed_item_padding_left_right"
+                android:text="   Like   "
+                app:bootstrapBrand="danger"
+                app:bootstrapSize="lg"
+                app:buttonMode="regular"
+                app:showOutline="true"
+                app:roundedCorners="false"
+                />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comment"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="lg"
+                app:buttonMode="regular"
+                app:showOutline="true"
+                app:roundedCorners="false"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -141,7 +141,7 @@ public class LaunchpadSectionFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
                                     long arg3) {
 
-                PullToRefreshListViewSampleAdapter.ViewHolder viewHolder = (PullToRefreshListViewSampleAdapter.ViewHolder) arg1.getTag();
+                PullToRefreshListViewAdapter.ViewHolder viewHolder = (PullToRefreshListViewAdapter.ViewHolder) arg1.getTag();
                 if (viewHolder.name != null){
                     Toast.makeText(getContext(), viewHolder.name.getText(), Toast.LENGTH_SHORT).show();
                 }
