@@ -2,23 +2,32 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="edu.utaustin.yusun.yellerandroid.MyWorldFragment">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageButton
-            android:id="@+id/connections_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/connections"
-            android:background="@color/white" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/connections_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/connections"
+                android:background="@color/white" />
 
-        <ImageButton
-            android:id="@+id/add_friend_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/add_friend"
-            android:background="@color/white" />
+            <ImageButton
+                android:id="@+id/add_friend_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/add_friend"
+                android:background="@color/white" />
+        </LinearLayout>
+        <edu.utaustin.yusun.yellerandroid.PullToRefreshListView
+            android:id="@+id/pull_to_refresh_listview"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="@android:color/white"
+            android:cacheColorHint="@android:color/white" />
     </LinearLayout>
-
 </FrameLayout>

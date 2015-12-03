@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -118,7 +117,6 @@ public class LaunchpadSectionFragment extends Fragment {
                 // For the sake of this sample, the code will pause here to
                 // force a delay when invoking the refresh
                 listView.postDelayed(new Runnable() {
-
 
                     @Override
                     public void run() {
@@ -248,98 +246,6 @@ public class LaunchpadSectionFragment extends Fragment {
 
     }
 
-    /**
-     * The adapter used to display the results in the list
-     *
-     */
-    public abstract class PullToRefreshListViewSampleAdapter extends android.widget.BaseAdapter {
-
-        private ArrayList<String> items = new ArrayList<String>();;
-
-        public class ViewHolder {
-            public String id;
-            public TextView name;
-        }
-
-
-        /**
-         * Loads the data.
-         */
-        public void loadData() {
-
-            // Here add your code to load the data for example from a webservice or DB
-
-            items = new ArrayList<String>();
-
-            items.add("Ajax Amsterdam");
-            items.add("Barcelona");
-            items.add("Manchester United");
-
-
-
-            // MANDATORY: Notify that the data has changed
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount() {
-            return items.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return items.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View rowView = convertView;
-
-            String record = (String) getItem(position);
-
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-
-            ViewHolder viewHolder = new ViewHolder();
-
-            if (convertView == null){
-                rowView = inflater.inflate(R.layout.list_item,null);
-
-                viewHolder.name = (TextView) rowView.findViewById(R.id.name);
-
-                rowView.setTag(viewHolder);
-            }
-
-            final ViewHolder holder = (ViewHolder) rowView.getTag();
-
-            holder.name.setText(record);
-
-            TextView name = (TextView) rowView.findViewById(R.id.name);
-            name.setText("Yu Sun");
-            TextView timestamp = (TextView) rowView
-                    .findViewById(R.id.timestamp);
-            timestamp.setText("15min");
-
-            TextView statusMsg = (TextView) rowView
-                    .findViewById(R.id.txtStatusMsg);
-            statusMsg.setText("I love Christmas!!!!");
-
-            ImageView profilePic = (ImageView) rowView
-                    .findViewById(R.id.profilePic);
-            profilePic.setImageResource(R.mipmap.avatar);
-
-            ImageView feedImageView = (ImageView) rowView
-                    .findViewById(R.id.feedImage1);
-            feedImageView.setImageResource(R.mipmap.christmas);
-
-
-            return rowView;
-        }
-    }
 }
 
 

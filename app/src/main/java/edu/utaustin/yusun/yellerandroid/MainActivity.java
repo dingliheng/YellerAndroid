@@ -107,9 +107,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    // The first section of the app is the most interesting -- it offers
-                    // a launchpad into the other demonstrations in this example application.
                     return new LaunchpadSectionFragment();
+
+                case 2:
+                    return new MyWorldFragment();
 
                 default:
                     // The other sections of the app are dummy placeholders.
