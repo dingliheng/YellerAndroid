@@ -43,6 +43,12 @@
         </activity>
         <activity android:name=".friends_activities.SearchFriendActivity" >
         </activity>
+        <activity android:name=".friends_activities.FriendListActivity" >
+        </activity>
+        <activity
+            android:name=".friends_activities.FriendPageActivity"
+            android:label="@string/title_activity_friend_page" >
+        </activity>
     </application>
 
 </manifest>

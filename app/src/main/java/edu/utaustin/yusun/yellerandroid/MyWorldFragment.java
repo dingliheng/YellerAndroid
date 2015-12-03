@@ -1,17 +1,20 @@
 package edu.utaustin.yusun.yellerandroid;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
+import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,9 +104,19 @@ public class MyWorldFragment extends Fragment {
                                     long arg3) {
 
                 PullToRefreshListViewAdapter.ViewHolder viewHolder = (PullToRefreshListViewAdapter.ViewHolder) arg1.getTag();
-                if (viewHolder.name != null){
+                if (viewHolder.name != null) {
                     Toast.makeText(getContext(), viewHolder.name.getText(), Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        final ImageButton friendlist_button = (ImageButton) rootView.findViewById(R.id.connections_btn);
+        friendlist_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FriendListActivity.class);
+                startActivity(intent);
+
             }
         });
 

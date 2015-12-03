@@ -1,17 +1,16 @@
 package edu.utaustin.yusun.yellerandroid.friends_activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.app.Activity;
 
 import edu.utaustin.yusun.yellerandroid.R;
 
-public class SearchFriendActivity extends Activity {
-
-    String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry","WebOS","Ubuntu","Windows7","Max OS X"};
+public class FriendPageActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_friend);
+        setContentView(R.layout.activity_friend_page);
     }
+
 }
