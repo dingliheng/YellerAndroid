@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -95,6 +96,18 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
+
+        // Listening to register new account link
+        registerScreen.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // Switching to Register screen
+                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void populateAutoComplete() {
