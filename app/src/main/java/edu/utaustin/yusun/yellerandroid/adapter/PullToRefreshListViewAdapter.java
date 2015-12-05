@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import edu.utaustin.yusun.yellerandroid.R;
 public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAdapter {
     private ArrayList<String> items = new ArrayList<String>();;
     private Context mContext;
-
+    private View rowView;
     public PullToRefreshListViewAdapter(Context context, ArrayList<String> items) {
         mContext = context;
         this.items = items;
@@ -64,8 +65,8 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = convertView;
+    public View getView(int position, View convertView, final ViewGroup parent) {
+        rowView = convertView;
 
         String record = (String) getItem(position);
 
@@ -74,7 +75,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         ViewHolder viewHolder = new ViewHolder();
 
         if (convertView == null){
-            rowView = inflater.inflate(R.layout.list_item,null);
+            rowView = inflater.inflate(R.layout.list_item, parent, false);
 
             viewHolder.name = (TextView) rowView.findViewById(R.id.name);
 
@@ -103,7 +104,15 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
                 .findViewById(R.id.feedImage1);
         feedImageView.setImageResource(R.mipmap.christmas);
 
+        if (convertView == null) {
+            LinearLayout reply = (LinearLayout) rowView.findViewById(R.id.reply);
 
+            for (int i = 0; i < 3; i++) {
+                inflater.inflate(R.layout.comment, reply, true);
+                TextView comment = (TextView) reply.findViewById(R.id.comment_content);
+                comment.setText("Love u");
+            }
+        }
         return rowView;
     }
 }
