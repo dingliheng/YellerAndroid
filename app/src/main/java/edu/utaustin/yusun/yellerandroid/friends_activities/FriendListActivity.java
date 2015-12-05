@@ -2,14 +2,14 @@ package edu.utaustin.yusun.yellerandroid.friends_activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import edu.utaustin.yusun.yellerandroid.R;
+import edu.utaustin.yusun.yellerandroid.adapter.FriendInfoAdapter;
 
 public class FriendListActivity extends Activity {
     String[] stringArray;
-    ArrayAdapter arrayAdapter;
+    FriendInfoAdapter friendListArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +20,9 @@ public class FriendListActivity extends Activity {
         for(int i=0; i < stringArray.length; i++){
             stringArray[i] = "String " + i;
         }
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, stringArray);
+
+        friendListArrayAdapter = new FriendInfoAdapter(this, new String[10]);
         ListView stringListView = (ListView) findViewById(R.id.listViewId);
-        stringListView.setAdapter(arrayAdapter);
+        stringListView.setAdapter(friendListArrayAdapter);
     }
 }

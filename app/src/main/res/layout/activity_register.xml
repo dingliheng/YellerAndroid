@@ -17,7 +17,7 @@
             <com.beardedhen.androidbootstrap.BootstrapLabel
             android:layout_width="match_parent"
             android:layout_height="79dp"
-            app:bootstrapBrand="primary"
+            app:bootstrapBrand="danger"
             app:bootstrapHeading="h1"
             app:roundedCorners="true"
             android:text="Yeller"
@@ -68,11 +68,18 @@
                 android:singleLine="true"
                 android:layout_marginTop="5dip"/>
             <!-- Register Button -->
-            <Button android:id="@+id/btnRegister"
-                android:layout_width="fill_parent"
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
-                android:text="Register New Account"/>
+                android:text="Register New Account"
+                app:bootstrapBrand="danger"
+                app:bootstrapSize="lg"
+                app:buttonMode="regular"
+                app:showOutline="false"
+                app:roundedCorners="true"
+                />
             <!-- Link to Login Screen -->
             <TextView android:id="@+id/link_to_login"
                 android:layout_width="fill_parent"
