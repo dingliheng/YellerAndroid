@@ -96,7 +96,7 @@
                 android:text="   Like   "
                 app:bootstrapBrand="danger"
                 app:bootstrapSize="lg"
-                app:buttonMode="regular"
+                app:buttonMode="checkbox"
                 app:showOutline="true"
                 app:roundedCorners="true"
                 />

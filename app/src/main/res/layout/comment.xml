@@ -9,13 +9,15 @@
         android:id="@+id/comment_owner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Elivs: "
+        android:layout_marginStart="10dp"
+        android:text="Elivs:"
         app:bootstrapBrand="success"
         />
     <TextView
         android:id="@+id/comment_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="So beautiful!!"/>
 
 </LinearLayout>
