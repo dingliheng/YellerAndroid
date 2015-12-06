@@ -5,12 +5,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
+
 public class RegisterActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        //Register Button
+        final BootstrapButton register_button = (BootstrapButton) findViewById(R.id.btnRegister);
+        register_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+
+            }
+        });
 
         TextView loginScreen = (TextView) findViewById(R.id.link_to_login);
 
@@ -23,6 +35,8 @@ public class RegisterActivity extends Activity {
                 finish();
             }
         });
+
+
     }
 
 }
