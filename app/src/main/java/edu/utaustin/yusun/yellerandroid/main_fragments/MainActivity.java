@@ -1,4 +1,4 @@
-package edu.utaustin.yusun.yellerandroid;
+package edu.utaustin.yusun.yellerandroid.main_fragments;
 /**
  * Created by yusun on 11/7/15.
  */
@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
+
+import edu.utaustin.yusun.yellerandroid.R;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 

@@ -62,7 +62,7 @@
                 app:roundedCorners="false" />
         </LinearLayout>
 
-        <edu.utaustin.yusun.yellerandroid.PullToRefreshListView
+        <edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView
             android:id="@+id/pull_to_refresh_listview"
             android:layout_height="fill_parent"
             android:layout_width="fill_parent"

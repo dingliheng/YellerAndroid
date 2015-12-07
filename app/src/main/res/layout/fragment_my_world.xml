@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="edu.utaustin.yusun.yellerandroid.MyWorldFragment">
+    tools:context="edu.utaustin.yusun.yellerandroid.main_fragments.MyWorldFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,7 +26,7 @@
                 android:background="#eefff0" />
 
         </LinearLayout>
-        <edu.utaustin.yusun.yellerandroid.PullToRefreshListView
+        <edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView
             android:id="@+id/pull_to_refresh_listview"
             android:layout_height="match_parent"
             android:layout_width="match_parent"

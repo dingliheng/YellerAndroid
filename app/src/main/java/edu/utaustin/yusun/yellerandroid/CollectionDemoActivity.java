@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
+
 public class CollectionDemoActivity extends FragmentActivity {
 
     /**

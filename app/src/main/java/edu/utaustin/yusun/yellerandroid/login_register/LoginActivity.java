@@ -1,4 +1,4 @@
-package edu.utaustin.yusun.yellerandroid;
+package edu.utaustin.yusun.yellerandroid.login_register;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -32,6 +32,8 @@ import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.utaustin.yusun.yellerandroid.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
 

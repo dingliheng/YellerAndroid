@@ -1,4 +1,4 @@
-package edu.utaustin.yusun.yellerandroid;
+package edu.utaustin.yusun.yellerandroid.main_fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
+import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
 

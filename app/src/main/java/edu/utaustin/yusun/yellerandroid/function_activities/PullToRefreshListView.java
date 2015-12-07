@@ -1,4 +1,4 @@
-package edu.utaustin.yusun.yellerandroid;
+package edu.utaustin.yusun.yellerandroid.function_activities;
 
 /**
  * Created by yusun on 11/13/15.
@@ -27,6 +27,8 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import edu.utaustin.yusun.yellerandroid.R;
 
 /**
  * A generic, customizable Android ListView implementation that has 'Pull to Refresh' functionality.

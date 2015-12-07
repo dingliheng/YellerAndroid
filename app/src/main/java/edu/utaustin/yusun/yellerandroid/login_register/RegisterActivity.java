@@ -1,4 +1,4 @@
-package edu.utaustin.yusun.yellerandroid;
+package edu.utaustin.yusun.yellerandroid.login_register;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
+
+import edu.utaustin.yusun.yellerandroid.R;
 
 public class RegisterActivity extends Activity {
 
@@ -19,7 +21,7 @@ public class RegisterActivity extends Activity {
         register_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
 
             }
         });
