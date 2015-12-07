@@ -29,22 +29,19 @@ import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
-import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by yusun on 11/2/15.
@@ -344,7 +341,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                         String if_newUser = jObject.getString("newUser");
                         if (if_newUser.equals("1")){
                             // TODO: if it's a new user, turn to register page
-                        }else {
+                        } else {
                             // TODO: 15/12/4 it not, turn to collection page
                         }
                     } catch (JSONException j) {

@@ -12,13 +12,22 @@
     android:weightSum="6.5"
     tools:context="edu.utaustin.yusun.yellerandroid.function_activities.UploadImageActivity">
 
-    <ImageView
+    <!--<ImageView-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="5"-->
+
+        <!--android:contentDescription="sample" />-->
+
+    <com.beardedhen.androidbootstrap.BootstrapThumbnail
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
-
-        android:contentDescription="sample" />
+        app:bootstrapBrand="info"
+        app:hasBorder="true"
+        />
     <EditText
         android:id="@+id/pictureTags"
         android:layout_width="fill_parent"

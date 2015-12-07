@@ -11,6 +11,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageButton
                 android:id="@+id/connections_btn"
                 android:layout_width="wrap_content"
@@ -18,12 +19,20 @@
                 android:src="@mipmap/connections"
                 android:background="#eefff0" />
 
+
             <ImageButton
                 android:id="@+id/add_friend_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/add_friend"
                 android:background="#eefff0" />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                style="@style/wrapping_button"
+                app:fontAwesomeIcon="fa_ambulance"
+                app:bootstrapBrand="primary"
+                app:roundedCorners="true"
+                />
 
         </LinearLayout>
         <edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView

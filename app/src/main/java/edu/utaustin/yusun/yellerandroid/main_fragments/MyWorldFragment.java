@@ -11,12 +11,14 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.TypefaceProvider;
+
 import java.util.ArrayList;
 
-import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
+import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +65,7 @@ public class MyWorldFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TypefaceProvider.registerDefaultIconSets();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);

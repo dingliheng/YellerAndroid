@@ -8,7 +8,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ImageView;
+
+import com.beardedhen.androidbootstrap.BootstrapThumbnail;
 
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.main_fragments.LaunchpadSectionFragment;
@@ -25,7 +26,7 @@ public class UploadImageActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         bitmap = (Bitmap) intent.getParcelableExtra(LaunchpadSectionFragment.BITMAPIMAGE);
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        BootstrapThumbnail imageView = (BootstrapThumbnail) findViewById(R.id.imageView);
         imageView.setImageBitmap(bitmap);
     }
 

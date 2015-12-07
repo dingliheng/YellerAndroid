@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.beardedhen.androidbootstrap.BootstrapThumbnail;
+import com.beardedhen.androidbootstrap.TypefaceProvider;
+
 import java.util.ArrayList;
 
 import edu.utaustin.yusun.yellerandroid.R;
@@ -23,12 +26,13 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
     public PullToRefreshListViewAdapter(Context context, ArrayList<String> items) {
         mContext = context;
         this.items = items;
+        TypefaceProvider.registerDefaultIconSets();
     }
     public class ViewHolder {
         public String id;
         public TextView name;
         public ImageView profilePic;
-        public ImageView feedImageView;
+        public BootstrapThumbnail feedImageView;
         public TextView timestamp;
         public TextView statusMsg;
     }
@@ -75,7 +79,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         String record = (String) getItem(position);
 
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-
+//        TypefaceProvider.registerDefaultIconSets();
         ViewHolder viewHolder = new ViewHolder();
 
         if (convertView == null){
@@ -85,7 +89,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
             viewHolder.timestamp = (TextView) rowView.findViewById(R.id.timestamp);
             viewHolder.statusMsg = (TextView) rowView.findViewById(R.id.txtStatusMsg);
             viewHolder.profilePic = (ImageView) rowView.findViewById(R.id.profilePic);
-            viewHolder.feedImageView = (ImageView) rowView.findViewById(R.id.feedImage1);
+            viewHolder.feedImageView = (BootstrapThumbnail) rowView.findViewById(R.id.feedImage1);
             rowView.setTag(viewHolder);
         }
 

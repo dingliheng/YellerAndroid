@@ -67,14 +67,24 @@
 
 
 
-        <ImageView
+        <!--<ImageView-->
+            <!--android:id="@+id/feedImage1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@mipmap/christmas"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:visibility="visible" >-->
+        <!--</ImageView>-->
+
+        <com.beardedhen.androidbootstrap.BootstrapThumbnail
             android:id="@+id/feedImage1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@mipmap/christmas"
-            android:scaleType="fitXY"
-            android:visibility="visible" >
-        </ImageView>
+            android:src="@mipmap/christmas"
+            android:visibility="visible"
+            app:bootstrapBrand="info"
+            app:hasBorder="false"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginRight="@dimen/feed_item_padding_left_right"
-                android:text="   Like   "
+                app:bootstrapText="{fa_heart}  Like "
                 app:bootstrapBrand="danger"
                 app:bootstrapSize="lg"
                 app:buttonMode="checkbox"
