@@ -27,6 +27,10 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
     public class ViewHolder {
         public String id;
         public TextView name;
+        public ImageView profilePic;
+        public ImageView feedImageView;
+        public TextView timestamp;
+        public TextView statusMsg;
     }
 
 
@@ -78,7 +82,10 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
             rowView = inflater.inflate(R.layout.list_item, parent, false);
 
             viewHolder.name = (TextView) rowView.findViewById(R.id.name);
-
+            viewHolder.timestamp = (TextView) rowView.findViewById(R.id.timestamp);
+            viewHolder.statusMsg = (TextView) rowView.findViewById(R.id.txtStatusMsg);
+            viewHolder.profilePic = (ImageView) rowView.findViewById(R.id.profilePic);
+            viewHolder.feedImageView = (ImageView) rowView.findViewById(R.id.feedImage1);
             rowView.setTag(viewHolder);
         }
 
@@ -86,23 +93,15 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
 
         holder.name.setText(record);
 
-        TextView name = (TextView) rowView.findViewById(R.id.name);
-        name.setText("Yu Sun");
-        TextView timestamp = (TextView) rowView
-                .findViewById(R.id.timestamp);
-        timestamp.setText("15min");
+        holder.name.setText("Yu Sun");
 
-        TextView statusMsg = (TextView) rowView
-                .findViewById(R.id.txtStatusMsg);
-        statusMsg.setText("I love Christmas!!!!");
+        holder.timestamp.setText("15min");
 
-        ImageView profilePic = (ImageView) rowView
-                .findViewById(R.id.profilePic);
-        profilePic.setImageResource(R.mipmap.avatar);
+        holder.statusMsg.setText("I love Christmas!!!!");
 
-        ImageView feedImageView = (ImageView) rowView
-                .findViewById(R.id.feedImage1);
-        feedImageView.setImageResource(R.mipmap.christmas);
+        holder.profilePic.setImageResource(R.mipmap.avatar);
+
+        holder.feedImageView.setImageResource(R.mipmap.christmas);
 
         if (convertView == null) {
             LinearLayout reply = (LinearLayout) rowView.findViewById(R.id.reply);
