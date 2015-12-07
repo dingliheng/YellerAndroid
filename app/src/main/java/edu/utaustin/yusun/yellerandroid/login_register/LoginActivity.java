@@ -36,6 +36,15 @@ import java.util.List;
 import edu.utaustin.yusun.yellerandroid.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by yusun on 11/2/15.
@@ -324,14 +333,29 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            String login_url = "http://socialyeller.appspot.com/android_login?"+"email="+mEmail+"&password="+mPassword;
+            System.out.println("LOGINURL "+login_url);
+            AsyncHttpClient httpClient = new AsyncHttpClient();
+            httpClient.get(login_url, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    try {
+                        JSONObject jObject = new JSONObject(new String(responseBody));
+                        String if_newUser = jObject.getString("newUser");
+                        if (if_newUser.equals("1")){
+                            // TODO: if it's a new user, turn to register page
+                        }else {
+                            // TODO: 15/12/4 it not, turn to collection page
+                        }
+                    } catch (JSONException j) {
+                        System.out.println("JSON Error");
+                    }
+                }
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                }
+            });
 
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
