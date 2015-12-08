@@ -47,9 +47,9 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
 
         items = new ArrayList<String>();
 
-        items.add("Ajax Amsterdam");
-        items.add("Barcelona");
-        items.add("Manchester United");
+        items.add("item 1");
+        items.add("item 2");
+        items.add("item 3");
 
 
 
@@ -72,6 +72,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         return position;
     }
 
+    //Show one list item
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
         rowView = convertView;
@@ -79,7 +80,6 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         String record = (String) getItem(position);
 
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-//        TypefaceProvider.registerDefaultIconSets();
         ViewHolder viewHolder = new ViewHolder();
 
         if (convertView == null){

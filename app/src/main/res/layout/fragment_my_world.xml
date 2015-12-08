@@ -8,33 +8,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="100dp"
+            android:padding="5dp"
+            android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/connections_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/connections"
-                android:background="#eefff0" />
-
-
-            <ImageButton
-                android:id="@+id/add_friend_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/add_friend"
-                android:background="#eefff0" />
 
             <com.beardedhen.androidbootstrap.BootstrapButton
-                style="@style/wrapping_button"
-                app:fontAwesomeIcon="fa_ambulance"
-                app:bootstrapBrand="primary"
+                android:id="@+id/connections_btn"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_margin="10dp"
+                app:fontAwesomeIcon="fa_group"
+                app:bootstrapBrand="info"
+                app:bootstrapSize="lg"
                 app:roundedCorners="true"
                 />
 
-        </LinearLayout>
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/add_friend_btn"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_toEndOf="@+id/connections_btn"
+                app:fontAwesomeIcon="fa_user_plus"
+                app:bootstrapBrand="warning"
+                app:bootstrapSize="lg"
+                app:roundedCorners="true"
+                />
+
+            <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="0dp"
+                android:src="@mipmap/avatar"
+                app:bootstrapBrand="danger"
+                app:hasBorder="true"
+                />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/change_avatar_btn"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_toStartOf="@+id/logoff_btn"
+                app:fontAwesomeIcon="fa_cloud_upload"
+                app:bootstrapBrand="success"
+                app:bootstrapSize="lg"
+                app:roundedCorners="true"
+                />
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/logoff_btn"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_alignParentEnd="true"
+                app:fontAwesomeIcon="fa_exchange"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="lg"
+                app:roundedCorners="true"
+                />
+
+        </RelativeLayout>
         <edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView
             android:id="@+id/pull_to_refresh_listview"
             android:layout_height="match_parent"

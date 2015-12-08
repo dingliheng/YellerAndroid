@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 import java.util.ArrayList;
@@ -115,7 +115,7 @@ public class MyWorldFragment extends Fragment {
             }
         });
 
-        final ImageButton friendlist_button = (ImageButton) rootView.findViewById(R.id.connections_btn);
+        final BootstrapButton friendlist_button = (BootstrapButton) rootView.findViewById(R.id.connections_btn);
         friendlist_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -80,10 +80,10 @@
             android:id="@+id/feedImage1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@mipmap/christmas"
+            android:background="@mipmap/christmas"
             android:visibility="visible"
-            app:bootstrapBrand="info"
-            app:hasBorder="false"
+            app:bootstrapBrand="primary"
+            app:hasBorder="true"
             />
 
         <LinearLayout
