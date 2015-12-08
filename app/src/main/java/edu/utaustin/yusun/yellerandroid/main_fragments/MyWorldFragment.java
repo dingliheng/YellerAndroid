@@ -7,10 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
 import java.util.ArrayList;
@@ -19,6 +19,7 @@ import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
+import edu.utaustin.yusun.yellerandroid.function_activities.searchDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +27,8 @@ import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListVie
  * Use the {@link MyWorldFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyWorldFragment extends Fragment {
+public class MyWorldFragment extends Fragment implements
+        View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -77,6 +79,13 @@ public class MyWorldFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_my_world, container, false);
+
+        //Add listeners to buttons
+        rootView.findViewById(R.id.connections_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.add_friend_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.change_avatar_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.logoff_btn).setOnClickListener(this);
+
         listView = (PullToRefreshListView) rootView.findViewById(R.id.pull_to_refresh_listview);
 
         listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
@@ -115,19 +124,35 @@ public class MyWorldFragment extends Fragment {
             }
         });
 
-        final BootstrapButton friendlist_button = (BootstrapButton) rootView.findViewById(R.id.connections_btn);
-        friendlist_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), FriendListActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
         // Register the context menu for actions
         registerForContextMenu(listView);
         return rootView;
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.connections_btn:
+                Intent intent = new Intent(getContext(), FriendListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.add_friend_btn:
+                searchNewFriend(v);
+                break;
+            case R.id.change_avatar_btn:
+                break;
+            case R.id.logoff_btn:
+                break;
+
+        }
+    }
+
+    //Search for new friend function
+    public void searchNewFriend(View v) {
+        searchDialog searchDialog = new searchDialog(this.getContext());
+        searchDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        searchDialog.show();
+
+
+    }
 }

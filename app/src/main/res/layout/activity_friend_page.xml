@@ -13,38 +13,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/follow_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="@dimen/feed_item_padding_left_right"
-                android:text="   Follow   "
-                app:bootstrapBrand="danger"
-                app:bootstrapSize="lg"
-                app:buttonMode="checkbox"
-                app:showOutline="true"
-                app:roundedCorners="true"
-                />
+            android:layout_height="100dp"
+            android:padding="5dp"
+            android:orientation="horizontal">
 
             <com.beardedhen.androidbootstrap.BootstrapButton
-                android:id="@+id/reserved_btn"
+                android:id="@+id/back_btn"
+                android:layout_height="match_parent"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="@dimen/feed_item_padding_left_right"
-                android:text="Comment"
+                android:layout_alignParentStart="true"
+                android:layout_margin="10dp"
+                app:fontAwesomeIcon="fa_mail_reply"
                 app:bootstrapBrand="info"
                 app:bootstrapSize="lg"
-                app:buttonMode="regular"
-                app:showOutline="true"
                 app:roundedCorners="true"
                 />
 
-        </LinearLayout>
+
+            <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="0dp"
+                android:src="@mipmap/avatar"
+                app:bootstrapBrand="danger"
+                app:hasBorder="true"
+                />
+
+
+            <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/follow_btn"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_alignParentEnd="true"
+                app:fontAwesomeIcon="fa_exchange"
+                app:bootstrapBrand="primary"
+                app:bootstrapSize="lg"
+                app:roundedCorners="true"
+                />
+
+        </RelativeLayout>
         <edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView
             android:id="@+id/pull_to_refresh_listview"
             android:layout_height="match_parent"
