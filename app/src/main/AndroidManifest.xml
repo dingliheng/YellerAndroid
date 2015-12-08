@@ -35,10 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CollectionDemoActivity"
-            android:label="@string/title_activity_collection_demo" >
-        </activity>
         <activity android:name=".function_activities.UploadImageActivity" >
         </activity>
         <activity android:name=".function_activities.PublishMoodActivity" >
