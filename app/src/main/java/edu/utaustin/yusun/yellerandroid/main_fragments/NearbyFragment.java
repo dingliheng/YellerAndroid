@@ -1,12 +1,13 @@
 package edu.utaustin.yusun.yellerandroid.main_fragments;
 
 import android.annotation.SuppressLint;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
+import im.delight.android.location.SimpleLocation;
 
 
 /**
@@ -37,6 +39,8 @@ public class NearbyFragment extends Fragment {
 
     private PullToRefreshListView listView;
     private PullToRefreshListViewAdapter adapter;
+
+    private SimpleLocation location;
 
     //Data to show
     ArrayList<String> items = new ArrayList<>();
@@ -71,6 +75,17 @@ public class NearbyFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        // construct a new instance of SimpleLocation
+        location = new SimpleLocation(getContext());
+
+        // if we can't access the location yet
+        if (!location.hasLocationEnabled()) {
+            // ask the user to enable location access
+            SimpleLocation.openSettings(getContext());
+        }
+
+
     }
 
     @Override
@@ -115,9 +130,15 @@ public class NearbyFragment extends Fragment {
                 }
             }
         });
+        TextView textView = (TextView) rootView.findViewById(R.id.location);
+        String locationTxt = "latitude: " + location.getLatitude() + "longitude: " + location.getLongitude();
+        textView.setText(locationTxt);
+
         // Register the context menu for actions
         registerForContextMenu(listView);
         return rootView;
     }
+
+
 
 }

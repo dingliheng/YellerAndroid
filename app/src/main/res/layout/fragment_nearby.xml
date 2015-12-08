@@ -17,6 +17,7 @@
             app:bootstrapText="{fa_transgender} Share your secrets.." />
 
         <TextView
+            android:id="@+id/location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView
