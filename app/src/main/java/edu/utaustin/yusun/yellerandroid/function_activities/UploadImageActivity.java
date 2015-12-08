@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.beardedhen.androidbootstrap.BootstrapThumbnail;
 
@@ -28,6 +29,11 @@ public class UploadImageActivity extends Activity {
         bitmap = (Bitmap) intent.getParcelableExtra(LaunchpadSectionFragment.BITMAPIMAGE);
         BootstrapThumbnail imageView = (BootstrapThumbnail) findViewById(R.id.imageView);
         imageView.setImageBitmap(bitmap);
+    }
+
+    //upload image button action
+    public void upload_image(View v) {
+
     }
 
     @Override
