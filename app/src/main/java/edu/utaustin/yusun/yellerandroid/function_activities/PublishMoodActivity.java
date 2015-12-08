@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.beardedhen.androidbootstrap.BootstrapButton;
 
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
@@ -21,6 +24,16 @@ public class PublishMoodActivity extends Activity {
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        //publish button action
+        final BootstrapButton mood_button = (BootstrapButton) findViewById(R.id.publish_btn);
+        mood_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
     }
 
     @Override
