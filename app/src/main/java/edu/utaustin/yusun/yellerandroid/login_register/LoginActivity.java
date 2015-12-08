@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -26,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
@@ -40,7 +42,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
-
+import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -72,6 +74,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,6 +212,41 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
+            String login_url = "http://socialyeller.appspot.com/android_login?"+"email="+email+"&password="+password;
+            System.out.println("LOGINURL " + login_url);
+            AsyncHttpClient httpClient = new AsyncHttpClient();
+            httpClient.get(login_url, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    try {
+                        JSONObject jObject = new JSONObject(new String(responseBody));
+                        String if_newUser = jObject.getString("newUser");
+                        System.out.println("if_newUser " + if_newUser);
+                        if (if_newUser.equals("1")) {
+                            Toast.makeText(context, "The user doesn't exist, please register first", Toast.LENGTH_LONG).show();
+                            Intent registeractivity = new Intent(LoginActivity.this, RegisterActivity.class);
+                            startActivity(registeractivity);
+                        } else {
+                            String isPasswordRight = jObject.getString("rightPassword");
+                            System.out.println("rightPassword " + isPasswordRight);
+                            if (isPasswordRight.equals("1")) {
+                                Intent mainactivity = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(mainactivity);
+                            } else {
+                                Toast.makeText(context, "The password is wrong", Toast.LENGTH_LONG).show();
+                                Intent loginactivity = new Intent(LoginActivity.this, LoginActivity.class);
+                                startActivity(loginactivity);
+                            }
+                        }
+                    } catch (JSONException j) {
+                        System.out.println("JSON Error");
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                }
+            });
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
@@ -330,30 +368,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            String login_url = "http://socialyeller.appspot.com/android_login?"+"email="+mEmail+"&password="+mPassword;
-            System.out.println("LOGINURL "+login_url);
-            AsyncHttpClient httpClient = new AsyncHttpClient();
-            httpClient.get(login_url, new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    try {
-                        JSONObject jObject = new JSONObject(new String(responseBody));
-                        String if_newUser = jObject.getString("newUser");
-                        if (if_newUser.equals("1")){
-                            // TODO: if it's a new user, turn to register page
-                        } else {
-                            // TODO: 15/12/4 it not, turn to collection page
-                        }
-                    } catch (JSONException j) {
-                        System.out.println("JSON Error");
-                    }
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                }
-            });
-
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
@@ -361,8 +375,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                     return pieces[1].equals(mPassword);
                 }
             }
-
-            // TODO: register the new account here.
+//            // TODO: register the new account here.
             return true;
         }
 
@@ -370,7 +383,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
             if (success) {
                 finish();
             } else {

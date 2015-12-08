@@ -2,6 +2,7 @@ package edu.utaustin.yusun.yellerandroid.login_register;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
+import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
 
 
 public class RegisterActivity extends Activity {
@@ -53,13 +55,14 @@ public class RegisterActivity extends Activity {
                 httpClient.get(register_url, params, new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        Log.w("async", "success!!!!");
-                        Toast.makeText(context, "Connect Successful", Toast.LENGTH_SHORT).show();
+//                        Log.w("async", "success!!!!");
+//                        Toast.makeText(context, "Connect Successful", Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject jObject = new JSONObject(new String(responseBody));
                             String if_newUser = jObject.getString("newUser");
                             if (if_newUser.equals("1")){
-                                // TODO: turn to next page after register successfully
+                                Intent mainactivity = new Intent(RegisterActivity.this, MainActivity.class);
+                                startActivity(mainactivity);
                             }else {
                                 Toast.makeText(context, "The e-mail has been registered, please sign in", Toast.LENGTH_SHORT).show();
                             }
