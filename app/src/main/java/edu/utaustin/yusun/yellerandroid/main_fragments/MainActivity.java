@@ -110,7 +110,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             switch (i) {
                 case 0:
                     return new LaunchpadSectionFragment();
-
+                case 1:
+                    return new NearbyFragment();
                 case 2:
                     return new MyWorldFragment();
 
