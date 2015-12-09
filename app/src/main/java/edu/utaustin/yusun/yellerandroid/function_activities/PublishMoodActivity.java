@@ -33,19 +33,20 @@ public class PublishMoodActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+                boolean anonymous = findViewById(R.id.anonymous).isSelected();
                 if (targetGroup.getChildAt(0).isSelected()) {           //To public is selected
-                    publish(0);
+                    publish(0, anonymous);
                 } else if ((targetGroup.getChildAt(1).isSelected())) {  //To friends is selected
-                    publish(1);
+                    publish(1, anonymous);
                 } else {                                                //To self is selected
-                    publish(2);
+                    publish(2, anonymous);
                 }
             }
         });
 
     }
 
-    public void publish (int i) {
+    public void publish (int i, boolean anonymous) {
         switch (i) {
             case 0:
                 break;
@@ -56,7 +57,7 @@ public class PublishMoodActivity extends Activity {
         }
 
         //To transfer to backend..
-        
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
