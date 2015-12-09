@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
+import com.beardedhen.androidbootstrap.BootstrapButtonGroup;
 
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
@@ -24,18 +25,39 @@ public class PublishMoodActivity extends Activity {
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
+        final BootstrapButtonGroup targetGroup = (BootstrapButtonGroup) findViewById(R.id.options);
+        targetGroup.getChildAt(0).setSelected(true);
         //publish button action
         final BootstrapButton mood_button = (BootstrapButton) findViewById(R.id.publish_btn);
         mood_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
+                if (targetGroup.getChildAt(0).isSelected()) {           //To public is selected
+                    publish(0);
+                } else if ((targetGroup.getChildAt(1).isSelected())) {  //To friends is selected
+                    publish(1);
+                } else {                                                //To self is selected
+                    publish(2);
+                }
             }
         });
+
     }
 
+    public void publish (int i) {
+        switch (i) {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+
+        //To transfer to backend..
+        
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

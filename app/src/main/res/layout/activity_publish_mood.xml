@@ -26,12 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/label"
-        android:text="BootstrapButtonGroup"
         android:orientation="horizontal"
         android:layout_toRightOf="@+id/label"
         android:weightSum="3"
         android:checkedButton="@+id/to_public"
-
         app:bootstrapBrand="warning"
         app:buttonMode="radio"
         app:bootstrapSize="lg"
