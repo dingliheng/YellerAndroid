@@ -4,6 +4,7 @@ package edu.utaustin.yusun.yellerandroid.main_fragments;
  */
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -33,8 +34,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * time.
      */
     ViewPager mViewPager;
+    public static String user_email;
 
     public void onCreate(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        user_email = intent.getStringExtra("user_email");
+        System.out.println("MAIN_EMAIL "+user_email);
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);

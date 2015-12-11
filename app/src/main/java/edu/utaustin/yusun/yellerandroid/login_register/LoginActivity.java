@@ -74,6 +74,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private static String user_email = "";
     Context context = this;
 
     @Override
@@ -180,7 +181,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        final String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -212,6 +213,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
+
             String login_url = "http://socialyeller.appspot.com/android_login?"+"email="+email+"&password="+password;
             System.out.println("LOGINURL " + login_url);
             AsyncHttpClient httpClient = new AsyncHttpClient();
@@ -231,6 +233,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                             System.out.println("rightPassword " + isPasswordRight);
                             if (isPasswordRight.equals("1")) {
                                 Intent mainactivity = new Intent(LoginActivity.this, MainActivity.class);
+                                mainactivity.putExtra("user_email",email);
                                 startActivity(mainactivity);
                             } else {
                                 Toast.makeText(context, "The password is wrong", Toast.LENGTH_LONG).show();

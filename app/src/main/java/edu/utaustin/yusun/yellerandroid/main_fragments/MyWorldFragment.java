@@ -3,6 +3,7 @@ package edu.utaustin.yusun.yellerandroid.main_fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
+import edu.utaustin.yusun.yellerandroid.login_register.LoginActivity.*;
 import edu.utaustin.yusun.yellerandroid.function_activities.searchDialog;
 
 /**

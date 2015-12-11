@@ -40,7 +40,8 @@ public class RegisterActivity extends Activity {
                 EditText idText = (EditText) findViewById(R.id.reg_fullname);
                 String newUser_id = idText.getText().toString();
                 EditText mailText = (EditText) findViewById(R.id.reg_email);
-                String newUser_email = mailText.getText().toString();
+                final String newUser_email = mailText.getText().toString();
+                System.out.println("NEWUSEREMAIL "+newUser_email);
                 EditText passwordText = (EditText) findViewById(R.id.reg_password);
                 String newUser_password = passwordText.getText().toString();
 
@@ -56,12 +57,13 @@ public class RegisterActivity extends Activity {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 //                        Log.w("async", "success!!!!");
-//                        Toast.makeText(context, "Connect Successful", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "Connect Successfully", Toast.LENGTH_SHORT).show();
                         try {
                             JSONObject jObject = new JSONObject(new String(responseBody));
                             String if_newUser = jObject.getString("newUser");
                             if (if_newUser.equals("1")){
                                 Intent mainactivity = new Intent(RegisterActivity.this, MainActivity.class);
+                                mainactivity.putExtra("user_email", newUser_email);
                                 startActivity(mainactivity);
                             }else {
                                 Toast.makeText(context, "The e-mail has been registered, please sign in", Toast.LENGTH_SHORT).show();
