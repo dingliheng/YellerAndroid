@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import edu.utaustin.yusun.yellerandroid.R;
 
 /**
- * Created by mackbook on 11/25/15.
+ * Created by yusun on 11/25/15.
  */
 public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAdapter {
     private ArrayList<String> items = new ArrayList<String>();;

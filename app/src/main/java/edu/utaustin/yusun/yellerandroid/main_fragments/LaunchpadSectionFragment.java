@@ -157,7 +157,7 @@ public class LaunchpadSectionFragment extends Fragment {
     }
 
     private void initializeItems() {
-        
+
     }
 
     private void selectImage() {

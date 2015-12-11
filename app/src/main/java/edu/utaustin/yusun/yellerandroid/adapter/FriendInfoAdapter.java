@@ -11,7 +11,7 @@ import android.widget.TextView;
 import edu.utaustin.yusun.yellerandroid.R;
 
 /**
- * Created by mackbook on 12/4/15.
+ * Created by yusun on 12/4/15.
  */
 public class FriendInfoAdapter extends ArrayAdapter {
     private LayoutInflater inflater;
