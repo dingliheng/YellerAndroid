@@ -82,6 +82,7 @@ public class LaunchpadSectionFragment extends Fragment {
             }
         });
 
+        initializeItems();
         listView = (PullToRefreshListView) rootView.findViewById(R.id.pull_to_refresh_listview);
 
         // OPTIONAL: Disable scrolling when list is refreshing
@@ -153,6 +154,10 @@ public class LaunchpadSectionFragment extends Fragment {
         // Register the context menu for actions
         registerForContextMenu(listView);
         return rootView;
+    }
+
+    private void initializeItems() {
+        
     }
 
     private void selectImage() {
