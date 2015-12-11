@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 
@@ -33,11 +32,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import edu.utaustin.yusun.yellerandroid.R;
+import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
+import edu.utaustin.yusun.yellerandroid.friends_activities.FriendPageActivity;
 import edu.utaustin.yusun.yellerandroid.function_activities.PublishMoodActivity;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
-import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.function_activities.UploadImageActivity;
-import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 
 /**
  * A fragment that launches other parts of the demo application.
@@ -146,7 +146,8 @@ public class FeedPadFragment extends Fragment {
 
                 PullToRefreshListViewAdapter.ViewHolder viewHolder = (PullToRefreshListViewAdapter.ViewHolder) arg1.getTag();
                 if (viewHolder.name != null){
-                    Toast.makeText(getContext(), viewHolder.name.getText(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext(), FriendPageActivity.class);
+                    startActivity(intent);
                 }
             }
         });

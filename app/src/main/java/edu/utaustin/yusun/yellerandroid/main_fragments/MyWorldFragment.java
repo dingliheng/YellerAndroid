@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 
@@ -137,7 +136,7 @@ public class MyWorldFragment extends Fragment implements
 
                 PullToRefreshListViewAdapter.ViewHolder viewHolder = (PullToRefreshListViewAdapter.ViewHolder) arg1.getTag();
                 if (viewHolder.name != null) {
-                    Toast.makeText(getContext(), viewHolder.name.getText(), Toast.LENGTH_SHORT).show();
+                    
                 }
             }
         });
