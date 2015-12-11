@@ -13,7 +13,7 @@ import android.view.View;
 import com.beardedhen.androidbootstrap.BootstrapThumbnail;
 
 import edu.utaustin.yusun.yellerandroid.R;
-import edu.utaustin.yusun.yellerandroid.main_fragments.LaunchpadSectionFragment;
+import edu.utaustin.yusun.yellerandroid.main_fragments.FeedPadFragment;
 import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
 
 public class UploadImageActivity extends Activity {
@@ -26,7 +26,7 @@ public class UploadImageActivity extends Activity {
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
-        bitmap = (Bitmap) intent.getParcelableExtra(LaunchpadSectionFragment.BITMAPIMAGE);
+        bitmap = (Bitmap) intent.getParcelableExtra(FeedPadFragment.BITMAPIMAGE);
         BootstrapThumbnail imageView = (BootstrapThumbnail) findViewById(R.id.imageView);
         imageView.setImageBitmap(bitmap);
     }

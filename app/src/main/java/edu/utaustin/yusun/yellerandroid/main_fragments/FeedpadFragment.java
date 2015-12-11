@@ -42,7 +42,7 @@ import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 /**
  * A fragment that launches other parts of the demo application.
  */
-public class LaunchpadSectionFragment extends Fragment {
+public class FeedPadFragment extends Fragment {
     int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     Button btnSelect;
     ImageView ivImage;
@@ -222,6 +222,7 @@ public class LaunchpadSectionFragment extends Fragment {
 
         Intent intent = new Intent(getContext(), UploadImageActivity.class);
         intent.putExtra(BITMAPIMAGE, thumbnail);
+        intent.putExtra("activity", "FeedPad");
         startActivity(intent);
     }
 
@@ -251,6 +252,7 @@ public class LaunchpadSectionFragment extends Fragment {
 
         Intent intent = new Intent(getContext(), UploadImageActivity.class);
         intent.putExtra(BITMAPIMAGE, bm);
+        intent.putExtra("activity", "FeedPad");
         startActivity(intent);
 
     }

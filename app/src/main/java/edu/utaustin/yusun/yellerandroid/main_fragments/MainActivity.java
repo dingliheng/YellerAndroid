@@ -114,7 +114,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    return new LaunchpadSectionFragment();
+                    return new FeedPadFragment();
                 case 1:
                     return new NearbyFragment();
                 case 2:

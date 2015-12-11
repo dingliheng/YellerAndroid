@@ -23,8 +23,7 @@
         <activity
             android:name=".login_register.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
-
+            android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name=".main_fragments.MainActivity"
@@ -50,7 +49,7 @@
         <activity
             android:name=".login_register.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
         </activity>
     </application>
 

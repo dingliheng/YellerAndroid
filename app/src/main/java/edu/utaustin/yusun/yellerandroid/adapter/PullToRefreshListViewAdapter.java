@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.beardedhen.androidbootstrap.TypefaceProvider;
 import java.util.ArrayList;
 
 import edu.utaustin.yusun.yellerandroid.R;
+import edu.utaustin.yusun.yellerandroid.function_activities.CommentDialog;
 
 /**
  * Created by yusun on 11/25/15.
@@ -116,6 +118,15 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
                 comment.setText("Love u");
             }
         }
+
+        rowView.findViewById(R.id.comment_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommentDialog searchDialog = new CommentDialog(v.getContext());
+                searchDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                searchDialog.show();
+            }
+        });
         return rowView;
     }
 }
