@@ -33,7 +33,7 @@ import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
 import edu.utaustin.yusun.yellerandroid.function_activities.UploadImageActivity;
-import edu.utaustin.yusun.yellerandroid.function_activities.searchDialog;
+import edu.utaustin.yusun.yellerandroid.function_activities.SearchDialog;
 import edu.utaustin.yusun.yellerandroid.login_register.LoginActivity;
 
 /**
@@ -136,7 +136,7 @@ public class MyWorldFragment extends Fragment implements
 
                 PullToRefreshListViewAdapter.ViewHolder viewHolder = (PullToRefreshListViewAdapter.ViewHolder) arg1.getTag();
                 if (viewHolder.name != null) {
-                    
+
                 }
             }
         });
@@ -169,7 +169,7 @@ public class MyWorldFragment extends Fragment implements
 
     //Search for new friend function
     public void searchNewFriend(View v) {
-        searchDialog searchDialog = new searchDialog(this.getContext());
+        SearchDialog searchDialog = new SearchDialog(this.getContext());
         searchDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         searchDialog.show();
 

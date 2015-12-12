@@ -19,11 +19,11 @@ import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
 /**
  * Created by yusun on 12/8/15.
  */
-public class searchDialog extends Dialog {
+public class SearchDialog extends Dialog {
 
     private EditText search;
 
-    public searchDialog(Context context) {
+    public SearchDialog(Context context) {
         super(context);
 
     }

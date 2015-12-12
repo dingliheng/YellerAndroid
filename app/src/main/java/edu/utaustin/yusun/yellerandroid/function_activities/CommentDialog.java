@@ -10,8 +10,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import com.beardedhen.androidbootstrap.BootstrapEditText;
 
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
@@ -20,7 +21,7 @@ import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
  * Created by yusun on 12/11/15.
  */
 public class CommentDialog extends Dialog {
-    private EditText search;
+    private BootstrapEditText search;
 
     public CommentDialog(Context context) {
         super(context);
@@ -40,7 +41,7 @@ public class CommentDialog extends Dialog {
     }
 
     private void initialize() {
-        search = (EditText) findViewById(R.id.search_text);
+        search = (BootstrapEditText) findViewById(R.id.comment_sent);
         search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
