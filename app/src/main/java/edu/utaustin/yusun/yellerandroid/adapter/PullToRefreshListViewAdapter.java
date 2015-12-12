@@ -89,7 +89,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         }
 
         final ViewHolder holder = (ViewHolder) rowView.getTag();
-
+        final int feed_id = record.getId();
         holder.name.setText(record.getName());
         holder.timestamp.setText(record.getTimeStamp()); // need to modify the time to the elapse time
         holder.statusMsg.setText(record.getStatus());
@@ -111,7 +111,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         rowView.findViewById(R.id.comment_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentDialog commentDialog = new CommentDialog(v.getContext());
+                CommentDialog commentDialog = new CommentDialog(v.getContext(), feed_id, PullToRefreshListViewAdapter.this);
                 commentDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 commentDialog.show();
             }

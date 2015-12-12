@@ -14,16 +14,20 @@ import android.widget.TextView;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
 
 import edu.utaustin.yusun.yellerandroid.R;
+import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 
 /**
  * Created by yusun on 12/11/15.
  */
 public class CommentDialog extends Dialog {
     private BootstrapEditText commment;
+    private PullToRefreshListViewAdapter adapter;
+    private int feed_id;
 
-    public CommentDialog(Context context) {
+    public CommentDialog(Context context, int feed_id, PullToRefreshListViewAdapter adapter) {
         super(context);
-
+        this.adapter = adapter;
+        this.feed_id = feed_id;
     }
 
     @Override
@@ -46,6 +50,7 @@ public class CommentDialog extends Dialog {
 
                 if (actionId == EditorInfo.IME_ACTION_SEND && commment.getText().length() > 0) {
 
+                    adapter.notifyDataSetChanged();
                     dismiss();
                 }
                 return true;

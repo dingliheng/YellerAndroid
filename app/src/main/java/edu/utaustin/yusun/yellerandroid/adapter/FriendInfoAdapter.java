@@ -29,6 +29,7 @@ public class FriendInfoAdapter extends ArrayAdapter {
         public TextView latest_tweet;
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         ViewHolder holder = null;
