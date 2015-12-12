@@ -3,21 +3,39 @@ package edu.utaustin.yusun.yellerandroid.function_activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapThumbnail;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+
+import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
-import edu.utaustin.yusun.yellerandroid.main_fragments.FeedPadFragment;
+import edu.utaustin.yusun.yellerandroid.main_fragments.LaunchpadSectionFragment;
 import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
 
 public class UploadImageActivity extends Activity {
     private Bitmap bitmap;
+    private String upload_url;
+    Context context = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,14 +44,39 @@ public class UploadImageActivity extends Activity {
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
-        bitmap = (Bitmap) intent.getParcelableExtra(FeedPadFragment.BITMAPIMAGE);
+        bitmap = (Bitmap) intent.getParcelableExtra(LaunchpadSectionFragment.BITMAPIMAGE);
+        String activity = intent.getStringExtra("activity");
         BootstrapThumbnail imageView = (BootstrapThumbnail) findViewById(R.id.imageView);
         imageView.setImageBitmap(bitmap);
+        upload_url=getUploadURL();
     }
 
     //upload image button action
     public void upload_image(View v) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+        byte[] b = baos.toByteArray();
+        byte[] encodedImage = Base64.encode(b, Base64.DEFAULT);
+        RequestParams params = new RequestParams();
+        params.put("file", new ByteArrayInputStream(b));
+        final String user_email = MainActivity.user_email;
 
+        EditText pictureText = (EditText) findViewById(R.id.pictureTags);
+        String picture_content = pictureText.getText().toString();
+        params.put("content", picture_content);
+        params.put("User_email", user_email);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(upload_url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Toast.makeText(context, "Upload Successfully", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Toast.makeText(context, "Upload Unsuccessfully", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -62,5 +105,32 @@ public class UploadImageActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public String getUploadURL(){
+        AsyncHttpClient httpClient = new AsyncHttpClient();
+        String request_url="http://socialyeller.appspot.com/android_getUploadUrl";
+        System.out.println(request_url);
+        httpClient.get(request_url, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+                Toast.makeText(context, "Connect Successfully", Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject jObject = new JSONObject(new String(response));
+                    upload_url = jObject.getString("upload_url");
+//                    postToServer(encodedImage, photoCaption, upload_url);
+
+                } catch (JSONException j) {
+                    System.out.println("JSON Error");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                Toast.makeText(context, "Connect Unsuccessfully", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return upload_url;
     }
 }
