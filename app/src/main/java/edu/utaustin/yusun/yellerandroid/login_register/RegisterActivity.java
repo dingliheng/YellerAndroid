@@ -54,7 +54,7 @@ public class RegisterActivity extends Activity {
                     passwordText.setError(getString(R.string.error_field_required));
                     focusView = passwordText;
                     cancel = true;
-                } else if (!isEmailValid(newUser_password)) {
+                } else if (!isPasswordValid(newUser_password)) {
                     passwordText.setError(getString(R.string.error_invalid_password));
                     focusView = passwordText;
                     cancel = true;
@@ -74,10 +74,6 @@ public class RegisterActivity extends Activity {
                 // Check for a valid user name, if the user entered one.
                 if (TextUtils.isEmpty(newUser_id)) {
                     idText.setError(getString(R.string.error_field_required));
-                    focusView = idText;
-                    cancel = true;
-                } else if (!isEmailValid(newUser_id)) {
-                    idText.setError(getString(R.string.error_invalid_name));
                     focusView = idText;
                     cancel = true;
                 }
