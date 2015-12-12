@@ -185,6 +185,50 @@ public class FeedPadFragment extends Fragment {
                         yellers_key_ids.add(key_ids_json.getString(i));
                         System.out.println(key_ids_json.getString(i));
                     }
+                    //initialize Items
+                    String findyeller_url = "http://socialyeller.appspot.com/android_findyeller";
+                    RequestParams newparams = new RequestParams();
+                    System.out.println("length "+yellers_key_ids.size());
+                    for (int i = 0; i <  yellers_key_ids.size(); i++){
+                        newparams.put("yeller_id", yellers_key_ids.get(i));
+                        final int j = i;
+                        AsyncHttpClient newhttpClient = new AsyncHttpClient();
+                        newhttpClient.get(findyeller_url, newparams, new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                try {
+                                    JSONObject jObject = new JSONObject(new String(responseBody));
+                                    String name = jObject.getString("fullname");
+                                    System.out.println("item" + j + " name:" + name);
+                                    String timestamp = jObject.getString("date");
+                                    System.out.println(timestamp);
+                                    String statusMsg = jObject.getString("content");
+                                    System.out.println(statusMsg);
+
+                                    JSONArray picture_urls_json = jObject.getJSONArray("picture_urls");
+                                    ArrayList<String> picture_urls = new ArrayList<String>();
+                                    for (int i = 0; i < picture_urls_json.length(); i++) {
+                                        picture_urls.add(picture_urls_json.getString(i));
+                                        System.out.println(picture_urls_json.getString(i));
+                                    }
+                                    if (picture_urls.size()>0){
+                                        String feedImageView_url = picture_urls.get(0);
+                                        System.out.println(feedImageView_url);
+                                    }
+
+                                    String profilePic_url = jObject.getString("portrait_url");
+                                    System.out.println("item" + j + " profilePic_url:" + profilePic_url);
+
+                                } catch (JSONException j) {
+                                    System.out.println("JSON Error");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            }
+                        });
+                    }
                     ;
                 } catch (JSONException j) {
                     System.out.println("JSON Error");
@@ -196,25 +240,6 @@ public class FeedPadFragment extends Fragment {
 
             }
         });
-        System.out.println(yellers_key_ids);
-
-        //initialize Items
-        String findyeller_url = "http://socialyeller.appspot.com/android_findyeller";
-        RequestParams newparams = new RequestParams();
-        for (int i = 0; i <  yellers_key_ids.size(); i++){
-            params.put("yeller_id", yellers_key_ids.get(i));
-            httpClient.get(feed_url, params, new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-                }
-            });
-        }
     }
 
     private void selectImage() {
