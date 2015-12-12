@@ -157,6 +157,7 @@ public class FeedPadFragment extends Fragment {
                 PullToRefreshListViewAdapter.ViewHolder viewHolder = (PullToRefreshListViewAdapter.ViewHolder) arg1.getTag();
                 if (viewHolder.name != null){
                     Intent intent = new Intent(getContext(), FriendPageActivity.class);
+                    intent.putExtra("userName", viewHolder.name.getText());
                     startActivity(intent);
                 }
             }

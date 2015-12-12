@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
+import edu.utaustin.yusun.yellerandroid.data.ListItem;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
 import im.delight.android.location.SimpleLocation;
 
@@ -43,7 +44,7 @@ public class NearbyFragment extends Fragment {
     private SimpleLocation location;
 
     //Data to show
-    ArrayList<String> items = new ArrayList<>();
+    ArrayList<ListItem> items = new ArrayList<>();
 
     /**
      * Use this factory method to create a new instance of

@@ -21,7 +21,7 @@ public class FriendPageActivity extends Activity implements
 
     private PullToRefreshListView listView;
     private PullToRefreshListViewAdapter adapter;
-
+    private String friendName;
 
     //Data to show
     ArrayList<ListItem> items = new ArrayList<>();
@@ -35,6 +35,9 @@ public class FriendPageActivity extends Activity implements
         //Add listeners to buttons
         findViewById(R.id.back_btn).setOnClickListener(this);
         findViewById(R.id.follow_btn).setOnClickListener(this);
+
+        friendName = getIntent().getStringExtra("name");
+        initializeItems(friendName);
 
         listView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_listview);
 
@@ -56,9 +59,6 @@ public class FriendPageActivity extends Activity implements
         adapter = new PullToRefreshListViewAdapter(this, items) {};
         listView.setAdapter(adapter);
 
-        // Request the adapter to load the data
-        adapter.loadData();
-
         // click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -78,6 +78,10 @@ public class FriendPageActivity extends Activity implements
         registerForContextMenu(listView);
     }
 
+    //Initialize the items data to show.
+    private void initializeItems(String friendName) {
+
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
