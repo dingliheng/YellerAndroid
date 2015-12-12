@@ -28,12 +28,13 @@ import java.io.ByteArrayOutputStream;
 
 import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
-import edu.utaustin.yusun.yellerandroid.main_fragments.LaunchpadSectionFragment;
+import edu.utaustin.yusun.yellerandroid.main_fragments.FeedPadFragment;
 import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
 
 public class UploadImageActivity extends Activity {
     private Bitmap bitmap;
     private String upload_url;
+    private String activity;
     Context context = this;
 
     @Override
@@ -44,8 +45,8 @@ public class UploadImageActivity extends Activity {
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
-        bitmap = (Bitmap) intent.getParcelableExtra(LaunchpadSectionFragment.BITMAPIMAGE);
-        String activity = intent.getStringExtra("activity");
+        bitmap = (Bitmap) intent.getParcelableExtra(FeedPadFragment.BITMAPIMAGE);
+        activity = intent.getStringExtra("activity");
         BootstrapThumbnail imageView = (BootstrapThumbnail) findViewById(R.id.imageView);
         imageView.setImageBitmap(bitmap);
         upload_url=getUploadURL();
@@ -60,11 +61,15 @@ public class UploadImageActivity extends Activity {
         RequestParams params = new RequestParams();
         params.put("file", new ByteArrayInputStream(b));
         final String user_email = MainActivity.user_email;
-
-        EditText pictureText = (EditText) findViewById(R.id.pictureTags);
-        String picture_content = pictureText.getText().toString();
-        params.put("content", picture_content);
         params.put("User_email", user_email);
+        params.put("activity", activity);
+
+
+        if (activity.equals("FeedPad")) {
+            EditText pictureText = (EditText) findViewById(R.id.pictureTags);
+            String picture_content = pictureText.getText().toString();
+            params.put("content", picture_content);
+        }
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(upload_url, params, new AsyncHttpResponseHandler() {
             @Override
