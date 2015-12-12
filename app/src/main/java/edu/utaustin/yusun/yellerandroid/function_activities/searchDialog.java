@@ -48,7 +48,7 @@ public class SearchDialog extends Dialog {
 
                 if (actionId == EditorInfo.IME_ACTION_SEARCH && search.getText().length() > 0) {
                     Intent intent = new Intent(getContext(), FriendListActivity.class);
-                    intent.putExtra("view", "Search");
+                    intent.putExtra("activity", "Search");
                     intent.putExtra("key", search.getText().toString());
                     getContext().startActivity(intent);
                     dismiss();

@@ -8,17 +8,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import edu.utaustin.yusun.yellerandroid.R;
+import edu.utaustin.yusun.yellerandroid.data.FriendInfoItem;
 
 /**
  * Created by yusun on 12/4/15.
  */
 public class FriendInfoAdapter extends ArrayAdapter {
     private LayoutInflater inflater;
+    private ArrayList<FriendInfoItem> items = new ArrayList<>();
 
-    public FriendInfoAdapter(Activity activity, String[] items){
+    public FriendInfoAdapter(Activity activity,  ArrayList<FriendInfoItem> items){
         super(activity, R.layout.search_result_layout, items);
         inflater = activity.getWindow().getLayoutInflater();
+        this.items = items;
     }
 
     public class ViewHolder {
@@ -29,6 +34,20 @@ public class FriendInfoAdapter extends ArrayAdapter {
         public TextView latest_tweet;
     }
 
+    @Override
+    public int getCount() {
+        return items.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return items.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
@@ -46,10 +65,10 @@ public class FriendInfoAdapter extends ArrayAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.name.setText("Yu Sun");
+        holder.name.setText(items.get(position).getName());
         holder.avatar.setImageResource(R.mipmap.avatar);
-        holder.latest_tweet.setText("It is so nice!");
-        holder.timestamp.setText("15min");
+        holder.latest_tweet.setText(items.get(position).getStatus());
+        holder.timestamp.setText(items.get(position).getTimeStamp());
 
         return convertView;
     }

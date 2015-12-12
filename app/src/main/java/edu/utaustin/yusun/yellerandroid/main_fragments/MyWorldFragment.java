@@ -152,6 +152,7 @@ public class MyWorldFragment extends Fragment implements
         switch (v.getId()) {
             case R.id.connections_btn:
                 Intent intent = new Intent(getContext(), FriendListActivity.class);
+                intent.putExtra("activity", "Connections");
                 startActivity(intent);
                 break;
             case R.id.add_friend_btn:
@@ -173,7 +174,6 @@ public class MyWorldFragment extends Fragment implements
         SearchDialog searchDialog = new SearchDialog(this.getContext());
         searchDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         searchDialog.show();
-
 
     }
 
