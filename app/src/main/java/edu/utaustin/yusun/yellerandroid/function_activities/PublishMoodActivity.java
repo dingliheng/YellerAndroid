@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,14 +17,15 @@ import com.beardedhen.androidbootstrap.BootstrapButtonGroup;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.squareup.seismic.ShakeDetector;
 
 import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
 
-public class PublishMoodActivity extends Activity {
+public class PublishMoodActivity extends Activity implements ShakeDetector.Listener {
     Context context = this;
-
+    BootstrapButton mood_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final String user_email = MainActivity.user_email;
@@ -38,20 +39,17 @@ public class PublishMoodActivity extends Activity {
         final BootstrapButtonGroup targetGroup = (BootstrapButtonGroup) findViewById(R.id.options);
         targetGroup.getChildAt(0).setSelected(true);
         //publish button action
-        final BootstrapButton mood_button = (BootstrapButton) findViewById(R.id.publish_btn);
+        mood_button = (BootstrapButton) findViewById(R.id.publish_btn);
         mood_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String to_whom;
                 boolean anonymous = findViewById(R.id.anonymous).isSelected();
                 if (targetGroup.getChildAt(0).isSelected()) {           //To public is selected
-                    publish(0, anonymous);
                     to_whom = "public";
                 } else if ((targetGroup.getChildAt(1).isSelected())) {  //To friends is selected
-                    publish(1, anonymous);
                     to_whom = "friend";
                 } else {                                                //To self is selected
-                    publish(2, anonymous);
                     to_whom = "self";
                 }
                 EditText yellerText = (EditText) findViewById(R.id.text_content);
@@ -78,21 +76,18 @@ public class PublishMoodActivity extends Activity {
                 });
             }
         });
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        ShakeDetector sd = new ShakeDetector(this);
+        sd.start(sensorManager);
+    }
+    @Override
+    public void hearShake() {
+        Toast.makeText(this, "Don't shake me, bro!", Toast.LENGTH_SHORT).show();
+        mood_button.performClick();
     }
 
-    public void publish (int i, boolean anonymous) {
-        switch (i) {
-            case 0:
-                break;
-            case 1:
-                break;
-            case 2:
-                break;
-        }
 
-        //To transfer to backend..
 
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -105,9 +100,10 @@ public class PublishMoodActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
                         if (items[item].equals("Yes!")) {
-                            Intent intent = new Intent(PublishMoodActivity.this, MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
+//                            Intent intent = new Intent(PublishMoodActivity.this, MainActivity.class);
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            startActivity(intent);
+                            finish();
                         } else if (items[item].equals("Opps..Stay here")) {
                             dialog.dismiss();
                         }
@@ -120,4 +116,6 @@ public class PublishMoodActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }
