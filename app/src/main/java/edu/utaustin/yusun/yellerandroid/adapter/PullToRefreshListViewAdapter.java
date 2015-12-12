@@ -16,16 +16,17 @@ import com.beardedhen.androidbootstrap.TypefaceProvider;
 import java.util.ArrayList;
 
 import edu.utaustin.yusun.yellerandroid.R;
+import edu.utaustin.yusun.yellerandroid.data.ListItem;
 import edu.utaustin.yusun.yellerandroid.function_activities.CommentDialog;
 
 /**
  * Created by yusun on 11/25/15.
  */
 public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAdapter {
-    private ArrayList<String> items = new ArrayList<String>();;
+    private ArrayList<ListItem> items = new ArrayList<ListItem>();;
     private Context mContext;
     private View rowView;
-    public PullToRefreshListViewAdapter(Context context, ArrayList<String> items) {
+    public PullToRefreshListViewAdapter(Context context, ArrayList<ListItem> items) {
         mContext = context;
         this.items = items;
         TypefaceProvider.registerDefaultIconSets();
@@ -46,14 +47,6 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
     public void loadData() {
 
         // Here add your code to load the data for example from a webservice or DB
-
-        items = new ArrayList<String>();
-
-        items.add("item 1");
-        items.add("item 2");
-        items.add("item 3");
-
-
 
         // MANDATORY: Notify that the data has changed
         notifyDataSetChanged();
@@ -79,7 +72,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
     public View getView(int position, View convertView, final ViewGroup parent) {
         rowView = convertView;
 
-        String record = (String) getItem(position);
+        ListItem record = (ListItem) getItem(position);
 
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
         ViewHolder viewHolder = new ViewHolder();
@@ -97,15 +90,11 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
 
         final ViewHolder holder = (ViewHolder) rowView.getTag();
 
-        holder.name.setText(record);
+        holder.name.setText(record.getName());
+        holder.timestamp.setText(record.getTimeStamp()); // need to modify the time to the elapse time
+        holder.statusMsg.setText(record.getStatus());
 
-        holder.name.setText("Yu Sun");
-
-        holder.timestamp.setText("15min");
-
-        holder.statusMsg.setText("I love Christmas!!!!");
-
-        holder.profilePic.setImageResource(R.mipmap.avatar);
+        holder.profilePic.setImageResource(R.mipmap.avatar); //Pisacco
 
         holder.feedImageView.setImageResource(R.mipmap.christmas);
 

@@ -6,7 +6,6 @@ package edu.utaustin.yusun.yellerandroid.main_fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,14 +16,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.loopj.android.http.AsyncHttpClient;
@@ -45,6 +42,7 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
+import edu.utaustin.yusun.yellerandroid.data.ListItem;
 import edu.utaustin.yusun.yellerandroid.friends_activities.FriendPageActivity;
 import edu.utaustin.yusun.yellerandroid.function_activities.PublishMoodActivity;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
@@ -68,7 +66,7 @@ public class FeedPadFragment extends Fragment {
     private String user_email = MainActivity.user_email;
 
     //Data to show
-    ArrayList<String> items = new ArrayList<>();
+    ArrayList<ListItem> items = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -197,27 +195,39 @@ public class FeedPadFragment extends Fragment {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {
+                                    //An item of data
+                                    ListItem item = new ListItem();
                                     JSONObject jObject = new JSONObject(new String(responseBody));
                                     String name = jObject.getString("fullname");
-                                    System.out.println("item" + j + " name:" + name);
+//                                    System.out.println("item" + j + " name:" + name);
+                                    item.setName(name);
+
                                     String timestamp = jObject.getString("date");
-                                    System.out.println(timestamp);
+//                                    System.out.println(timestamp);
+                                    item.setTimeStamp(timestamp);
+
                                     String statusMsg = jObject.getString("content");
-                                    System.out.println(statusMsg);
+//                                    System.out.println(statusMsg);
+                                    item.setStatus(statusMsg);
 
                                     JSONArray picture_urls_json = jObject.getJSONArray("picture_urls");
                                     ArrayList<String> picture_urls = new ArrayList<String>();
                                     for (int i = 0; i < picture_urls_json.length(); i++) {
                                         picture_urls.add(picture_urls_json.getString(i));
-                                        System.out.println(picture_urls_json.getString(i));
+//                                        System.out.println(picture_urls_json.getString(i));
                                     }
-                                    if (picture_urls.size()>0){
+                                    if (picture_urls.size() > 0) {
                                         String feedImageView_url = picture_urls.get(0);
-                                        System.out.println(feedImageView_url);
+//                                        System.out.println(feedImageView_url);
+                                        item.setImage(feedImageView_url);
                                     }
 
+
                                     String profilePic_url = jObject.getString("portrait_url");
-                                    System.out.println("item" + j + " profilePic_url:" + profilePic_url);
+//                                    System.out.println("item" + j + " profilePic_url:" + profilePic_url);
+                                    item.setProfilePic(profilePic_url);
+
+                                    items.add(item);
 
                                 } catch (JSONException j) {
                                     System.out.println("JSON Error");
