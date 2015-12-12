@@ -1,8 +1,8 @@
 package edu.utaustin.yusun.yellerandroid.friends_activities;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
+import edu.utaustin.yusun.yellerandroid.data.ListItem;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
 
 public class FriendPageActivity extends Activity implements
@@ -23,7 +24,7 @@ public class FriendPageActivity extends Activity implements
 
 
     //Data to show
-    ArrayList<String> items = new ArrayList<>();
+    ArrayList<ListItem> items = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

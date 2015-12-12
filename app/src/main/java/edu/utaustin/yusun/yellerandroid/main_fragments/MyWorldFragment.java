@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
+import edu.utaustin.yusun.yellerandroid.data.ListItem;
 import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
 import edu.utaustin.yusun.yellerandroid.function_activities.UploadImageActivity;
@@ -60,7 +61,7 @@ public class MyWorldFragment extends Fragment implements
 
 
     //Data to show
-    ArrayList<String> items = new ArrayList<>();
+    ArrayList<ListItem> items = new ArrayList<>();
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.

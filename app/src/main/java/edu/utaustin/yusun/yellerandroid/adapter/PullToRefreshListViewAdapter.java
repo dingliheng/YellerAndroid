@@ -111,9 +111,9 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         rowView.findViewById(R.id.comment_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentDialog searchDialog = new CommentDialog(v.getContext());
-                searchDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                searchDialog.show();
+                CommentDialog commentDialog = new CommentDialog(v.getContext());
+                commentDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                commentDialog.show();
             }
         });
         return rowView;

@@ -2,7 +2,6 @@ package edu.utaustin.yusun.yellerandroid.function_activities;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -15,13 +14,12 @@ import android.widget.TextView;
 import com.beardedhen.androidbootstrap.BootstrapEditText;
 
 import edu.utaustin.yusun.yellerandroid.R;
-import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
 
 /**
  * Created by yusun on 12/11/15.
  */
 public class CommentDialog extends Dialog {
-    private BootstrapEditText search;
+    private BootstrapEditText commment;
 
     public CommentDialog(Context context) {
         super(context);
@@ -41,23 +39,20 @@ public class CommentDialog extends Dialog {
     }
 
     private void initialize() {
-        search = (BootstrapEditText) findViewById(R.id.comment_sent);
-        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        commment = (BootstrapEditText) findViewById(R.id.comment_sent);
+        commment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                if (actionId == EditorInfo.IME_ACTION_SEND && search.getText().length() > 0) {
-                    Intent intent = new Intent(getContext(), FriendListActivity.class);
-                    intent.putExtra("view", "Search");
-                    intent.putExtra("key", search.getText().toString());
-                    getContext().startActivity(intent);
+                if (actionId == EditorInfo.IME_ACTION_SEND && commment.getText().length() > 0) {
+
                     dismiss();
                 }
                 return true;
             }
         });
 
-        search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        commment.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
