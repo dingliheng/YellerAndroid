@@ -15,7 +15,8 @@ import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
 
-public class FriendPageActivity extends Activity {
+public class FriendPageActivity extends Activity implements
+        View.OnClickListener {
 
     private PullToRefreshListView listView;
     private PullToRefreshListViewAdapter adapter;
@@ -29,6 +30,11 @@ public class FriendPageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_page);
         TypefaceProvider.registerDefaultIconSets();
+
+        //Add listeners to buttons
+        findViewById(R.id.back_btn).setOnClickListener(this);
+        findViewById(R.id.follow_btn).setOnClickListener(this);
+
         listView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_listview);
 
         listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
@@ -71,4 +77,14 @@ public class FriendPageActivity extends Activity {
         registerForContextMenu(listView);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.back_btn:
+                finish();
+                break;
+            case R.id.follow_btn:
+                break;
+        }
+    }
 }
