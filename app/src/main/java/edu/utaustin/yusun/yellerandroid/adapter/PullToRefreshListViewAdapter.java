@@ -2,8 +2,6 @@ package edu.utaustin.yusun.yellerandroid.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -131,8 +125,8 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
                         JSONArray comments_json = jObject.getJSONArray("comments");
                         for (int i = 0; i < authors_json.length(); i++) {
                             inflater.inflate(R.layout.comment, reply, true);
-                            TextView comment = (TextView) reply.findViewById(R.id.comment_content);
-                            TextView comment_owner = (TextView) reply.findViewById(R.id.comment_owner);
+                            TextView comment = (TextView) reply.getChildAt(i).findViewById(R.id.comment_content);
+                            TextView comment_owner = (TextView) reply.getChildAt(i).findViewById(R.id.comment_owner);
                             comment_owner.setText(authors_json.getString(i));
                             comment.setText(comments_json.getString(i));
                         }

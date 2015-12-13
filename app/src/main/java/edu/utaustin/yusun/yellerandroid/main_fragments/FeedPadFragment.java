@@ -66,7 +66,7 @@ public class FeedPadFragment extends Fragment {
     private String user_email = MainActivity.user_email;
 
     //Data to show
-    ArrayList<ListItem> items = new ArrayList<>();
+    ArrayList<ListItem> items;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,8 +91,8 @@ public class FeedPadFragment extends Fragment {
                 selectImage();
             }
         });
-
-        initializeItems();
+        if (items == null)
+            initializeItems();
         listView = (PullToRefreshListView) rootView.findViewById(R.id.pull_to_refresh_listview);
 
         // OPTIONAL: Disable scrolling when list is refreshing
@@ -116,21 +116,10 @@ public class FeedPadFragment extends Fragment {
 
             @Override
             public void onRefresh() {
-                // Your code to refresh the list contents goes here
 
-                // for example:
-                // If this is a webservice call, it might be asynchronous so
-                // you would have to call listView.onRefreshComplete(); when
-                // the webservice returns the data
-                adapter.loadData();
+                adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
+                listView.setAdapter(adapter);
 
-                // Make sure you call listView.onRefreshComplete()
-                // when the loading is done. This can be done from here or any
-                // other place, like on a broadcast receive from your loading
-                // service or the onPostExecute of your AsyncTask.
-
-                // For the sake of this sample, the code will pause here to
-                // force a delay when invoking the refresh
                 listView.postDelayed(new Runnable() {
 
                     @Override
@@ -143,9 +132,6 @@ public class FeedPadFragment extends Fragment {
 
         adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
         listView.setAdapter(adapter);
-
-        // Request the adapter to load the data
-        adapter.loadData();
 
         // click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -169,6 +155,7 @@ public class FeedPadFragment extends Fragment {
     }
 
     private void initializeItems() {
+        items = new ArrayList<>();
         String feed_url = "http://socialyeller.appspot.com/android_feed";
         RequestParams params = new RequestParams();
         final ArrayList<String> yellers_key_ids = new ArrayList<String>();
