@@ -52,7 +52,7 @@ public class NearbyFragment extends Fragment {
     private SimpleLocation location;
 
     //Data to show
-    ArrayList<ListItem> items = new ArrayList<>();
+    ArrayList<ListItem> items;
 
     /**
      * Use this factory method to create a new instance of
@@ -178,7 +178,6 @@ public class NearbyFragment extends Fragment {
                         final ListItem item = new ListItem();
                         newparams.put("yeller_id", yellers_key_ids.get(i));
                         item.setYeller_id(yellers_key_ids.get(i));
-                        final int j = i;
                         AsyncHttpClient newhttpClient = new AsyncHttpClient();
                         newhttpClient.get(findyeller_url, newparams, new AsyncHttpResponseHandler() {
                             @Override
@@ -188,7 +187,6 @@ public class NearbyFragment extends Fragment {
 
                                     JSONObject jObject = new JSONObject(new String(responseBody));
                                     String anonymity = jObject.getString("anonymity");
-
                                     String name = jObject.getString("fullname");
                                     item.setName(name);
 
@@ -212,6 +210,7 @@ public class NearbyFragment extends Fragment {
                                     String profilePic_url = jObject.getString("portrait_url");
                                     item.setProfilePic(profilePic_url);
 
+                                    items.add(item);
 
 //                                    try{
 //                                        Thread.sleep(1000);
@@ -228,9 +227,7 @@ public class NearbyFragment extends Fragment {
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                             }
                         });
-                        items.add(item);
                     }
-                    ;
                 } catch (JSONException j) {
                     System.out.println("JSON Error");
                 }
@@ -242,7 +239,4 @@ public class NearbyFragment extends Fragment {
             }
         });
     }
-
-
-
 }

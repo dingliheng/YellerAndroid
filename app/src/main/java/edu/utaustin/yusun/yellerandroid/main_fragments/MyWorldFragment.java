@@ -188,7 +188,6 @@ public class MyWorldFragment extends Fragment implements
                     for (int i = 0; i <  yellers_key_ids.size(); i++) {
                         final ListItem item = new ListItem();
                         newparams.put("yeller_id", yellers_key_ids.get(i));
-
                         AsyncHttpClient newhttpClient = new AsyncHttpClient();
                         newhttpClient.get(findyeller_url, newparams, new AsyncHttpResponseHandler() {
                             @Override

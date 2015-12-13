@@ -5,6 +5,11 @@ package edu.utaustin.yusun.yellerandroid.data;
  */
 public class FriendInfoItem {
     private String name, status, profilePic, timeStamp;
+
+    public FriendInfoItem () {
+
+    }
+
     public FriendInfoItem(String name, String status, String profilePic, String timeStamp) {
         super();
 
@@ -14,7 +19,6 @@ public class FriendInfoItem {
         this.timeStamp = timeStamp;
 
     }
-
 
     public String getName() {
         return name;
