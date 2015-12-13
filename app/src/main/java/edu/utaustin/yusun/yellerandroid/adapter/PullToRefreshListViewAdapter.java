@@ -110,6 +110,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         }
 
         if (record.getImage() != null) {
+            holder.feedImageView.setVisibility(View.VISIBLE);
             Picasso.with(mContext).load(record.getImage()).into(holder.feedImageView);
         } else {
             holder.feedImageView.setVisibility(View.INVISIBLE);

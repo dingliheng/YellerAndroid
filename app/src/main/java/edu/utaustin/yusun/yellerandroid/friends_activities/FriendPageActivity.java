@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
@@ -47,7 +48,7 @@ public class FriendPageActivity extends Activity implements
 
         friendName = getIntent().getStringExtra("userName");
         System.err.println("FriendPage: " + friendName);
-        System.out.println("friend name: "+ friendName);
+        System.out.println("friend name: " + friendName);
         initializeItems(friendName);
 
         listView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_listview);
@@ -57,10 +58,13 @@ public class FriendPageActivity extends Activity implements
             @Override
             public void onRefresh() {
 
-                adapter.loadData();
+                initializeItems(friendName);
+                Collections.sort(items);
                 listView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        adapter = new PullToRefreshListViewAdapter(FriendPageActivity.this, items){};
+                        listView.setAdapter(adapter);
                         listView.onRefreshComplete();
                     }
                 }, 2000);
@@ -115,7 +119,6 @@ public class FriendPageActivity extends Activity implements
                         final ListItem item = new ListItem();
                         newparams.put("yeller_id", yellers_key_ids.get(i));
                         item.setYeller_id(yellers_key_ids.get(i));
-                        final int j = i;
                         AsyncHttpClient newhttpClient = new AsyncHttpClient();
                         newhttpClient.get(findyeller_url, newparams, new AsyncHttpResponseHandler() {
                             @Override
@@ -125,39 +128,33 @@ public class FriendPageActivity extends Activity implements
 
                                     JSONObject jObject = new JSONObject(new String(responseBody));
                                     String name = jObject.getString("fullname");
-//                                    System.out.println("item" + j + " name:" + name);
                                     item.setName(name);
 
                                     String timestamp = jObject.getString("date");
-//                                    System.out.println(timestamp);
                                     item.setTimeStamp(timestamp);
 
                                     String statusMsg = jObject.getString("content");
-//                                    System.out.println(statusMsg);
                                     item.setStatus(statusMsg);
 
                                     JSONArray picture_urls_json = jObject.getJSONArray("picture_urls");
                                     ArrayList<String> picture_urls = new ArrayList<String>();
                                     for (int i = 0; i < picture_urls_json.length(); i++) {
                                         picture_urls.add(picture_urls_json.getString(i));
-//                                        System.out.println(picture_urls_json.getString(i));
                                     }
+
                                     if (picture_urls.size() > 0) {
                                         String feedImageView_url = picture_urls.get(0);
-//                                        System.out.println(feedImageView_url);
                                         item.setImage(feedImageView_url);
                                     }
 
                                     String profilePic_url = jObject.getString("portrait_url");
-//                                    System.out.println("item" + j + " profilePic_url:" + profilePic_url);
                                     item.setProfilePic(profilePic_url);
 
+                                    items.add(item);
+                                    Collections.sort(items);
+                                    if (adapter != null)
+                                        adapter.notifyDataSetChanged();
 
-//                                    try{
-//                                        Thread.sleep(1000);
-//                                    } catch (InterruptedException e) {
-//                                        e.printStackTrace();
-//                                    }
 
                                 } catch (JSONException j) {
                                     System.out.println("JSON Error");
@@ -168,9 +165,9 @@ public class FriendPageActivity extends Activity implements
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                             }
                         });
-                        items.add(item);
+
                     }
-                    ;
+
                 } catch (JSONException j) {
                     System.out.println("JSON Error");
                 }

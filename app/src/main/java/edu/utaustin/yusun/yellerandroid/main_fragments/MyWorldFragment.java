@@ -36,6 +36,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
@@ -122,6 +123,9 @@ public class MyWorldFragment extends Fragment implements
         if (items == null)
             initializeItems();
 
+        if (avatar_url != null)
+            Picasso.with(getContext()).load(avatar_url).into(avatar_view);
+
         adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
         listView.setAdapter(adapter);
 
@@ -131,13 +135,12 @@ public class MyWorldFragment extends Fragment implements
             public void onRefresh() {
 
                 initializeItems();
-                adapter = new PullToRefreshListViewAdapter(getActivity(), items) {
-                };
-                listView.setAdapter(adapter);
-
+                Collections.sort(items);
                 listView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        adapter = new PullToRefreshListViewAdapter(getActivity(), items){};
+                        listView.setAdapter(adapter);
                         listView.onRefreshComplete();
                     }
                 }, 2000);
@@ -205,7 +208,7 @@ public class MyWorldFragment extends Fragment implements
                                     item.setStatus(statusMsg);
 
                                     JSONArray picture_urls_json = jObject.getJSONArray("picture_urls");
-                                    ArrayList<String> picture_urls = new ArrayList<String>();
+                                    ArrayList<String> picture_urls = new ArrayList<>();
                                     for (int i = 0; i < picture_urls_json.length(); i++) {
                                         picture_urls.add(picture_urls_json.getString(i));
                                     }
@@ -220,10 +223,12 @@ public class MyWorldFragment extends Fragment implements
 
                                     if (avatar_url == null) {
                                         avatar_url = profilePic_url;
-                                        Picasso.with(getContext()).load(avatar_url).into(avatar_view);
                                     }
+
                                     items.add(item);
-                                    adapter.notifyDataSetChanged();
+                                    Collections.sort(items);
+                                    if (adapter != null)
+                                        adapter.notifyDataSetChanged();
 
                                 } catch (JSONException j) {
                                     System.out.println("JSON Error");
@@ -236,7 +241,9 @@ public class MyWorldFragment extends Fragment implements
                         });
 
                     }
-                    ;
+                    adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
+                    listView.setAdapter(adapter);
+
                 } catch (JSONException j) {
                     System.out.println("JSON Error");
                 }

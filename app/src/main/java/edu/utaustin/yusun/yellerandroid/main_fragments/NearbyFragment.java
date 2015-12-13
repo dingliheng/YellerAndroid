@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
@@ -113,10 +114,12 @@ public class NearbyFragment extends Fragment {
             public void onRefresh() {
 
                 initializeItems();
-                adapter.loadData();
+                Collections.sort(items);
                 listView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        adapter = new PullToRefreshListViewAdapter(getActivity(), items){};
+                        listView.setAdapter(adapter);
                         listView.onRefreshComplete();
                     }
                 }, 2000);
@@ -126,8 +129,6 @@ public class NearbyFragment extends Fragment {
         adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
         listView.setAdapter(adapter);
 
-        // Request the adapter to load the data
-        adapter.loadData();
 
         // click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -209,6 +210,10 @@ public class NearbyFragment extends Fragment {
 
                                     String profilePic_url = jObject.getString("portrait_url");
                                     item.setProfilePic(profilePic_url);
+                                    items.add(item);
+                                    Collections.sort(items);
+                                    if (adapter != null)
+                                        adapter.notifyDataSetChanged();
 
                                     items.add(item);
 
@@ -228,6 +233,7 @@ public class NearbyFragment extends Fragment {
                             }
                         });
                     }
+
                 } catch (JSONException j) {
                     System.out.println("JSON Error");
                 }
