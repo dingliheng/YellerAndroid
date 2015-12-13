@@ -38,6 +38,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
@@ -73,7 +74,6 @@ public class FeedPadFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_section_launchpad, container, false);
 
-
         final BootstrapButton mood_button = (BootstrapButton) rootView.findViewById(R.id.mood_button);
         mood_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,11 +92,13 @@ public class FeedPadFragment extends Fragment {
             }
         });
         listView = (PullToRefreshListView) rootView.findViewById(R.id.pull_to_refresh_listview);
-        if (items == null)
+        if (items == null) {
             initializeItems();
-
+            Collections.sort(items);
+        }
         adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
         listView.setAdapter(adapter);
+
 
 
         // OPTIONAL: Disable scrolling when list is refreshing
@@ -122,14 +124,13 @@ public class FeedPadFragment extends Fragment {
             public void onRefresh() {
 
                 initializeItems();
-                adapter = new PullToRefreshListViewAdapter(getActivity(), items) {
-                };
-                listView.setAdapter(adapter);
-
+                Collections.sort(items);
                 listView.postDelayed(new Runnable() {
 
                     @Override
                     public void run() {
+                        adapter = new PullToRefreshListViewAdapter(getActivity(), items){};
+                        listView.setAdapter(adapter);
                         listView.onRefreshComplete();
                     }
                 }, 2000);
@@ -161,6 +162,7 @@ public class FeedPadFragment extends Fragment {
 
     private void initializeItems() {
         items = new ArrayList<>();
+
         String feed_url = "http://socialyeller.appspot.com/android_feed";
         RequestParams params = new RequestParams();
         final ArrayList<String> yellers_key_ids = new ArrayList<String>();
@@ -179,8 +181,9 @@ public class FeedPadFragment extends Fragment {
                     //initialize Items
                     String findyeller_url = "http://socialyeller.appspot.com/android_findyeller";
                     RequestParams newparams = new RequestParams();
-                    System.out.println("length " + yellers_key_ids.size());
-                    for (int i = 0; i <  yellers_key_ids.size(); i++){
+                    Object lock  = new Object();
+                    for (int i = 0; i <  yellers_key_ids.size(); i++) {
+
                         final ListItem item = new ListItem();
                         newparams.put("yeller_id", yellers_key_ids.get(i));
                         item.setYeller_id(yellers_key_ids.get(i));
@@ -208,7 +211,7 @@ public class FeedPadFragment extends Fragment {
                                     for (int i = 0; i < picture_urls_json.length(); i++) {
                                         picture_urls.add(picture_urls_json.getString(i));
                                     }
-
+                                    System.err.println(statusMsg + "Picture size: " + picture_urls.size());
                                     if (picture_urls.size() > 0) {
                                         String feedImageView_url = picture_urls.get(0);
                                         item.setImage(feedImageView_url);
@@ -216,8 +219,10 @@ public class FeedPadFragment extends Fragment {
 
                                     String profilePic_url = jObject.getString("portrait_url");
                                     item.setProfilePic(profilePic_url);
-
-                                    adapter.notifyDataSetChanged();
+                                    items.add(item);
+                                    Collections.sort(items);
+                                    if (adapter != null)
+                                        adapter.notifyDataSetChanged();
 
                                 } catch (JSONException j) {
                                     System.out.println("JSON Error");
@@ -228,9 +233,8 @@ public class FeedPadFragment extends Fragment {
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                             }
                         });
-                        items.add(item);
                     }
-                    ;
+
                 } catch (JSONException j) {
                     System.out.println("JSON Error");
                 }

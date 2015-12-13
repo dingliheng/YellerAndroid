@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
@@ -52,7 +53,7 @@ public class NearbyFragment extends Fragment {
     private SimpleLocation location;
 
     //Data to show
-    ArrayList<ListItem> items = new ArrayList<>();
+    ArrayList<ListItem> items;
 
     /**
      * Use this factory method to create a new instance of
@@ -113,10 +114,12 @@ public class NearbyFragment extends Fragment {
             public void onRefresh() {
 
                 initializeItems();
-                adapter.loadData();
+                Collections.sort(items);
                 listView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        adapter = new PullToRefreshListViewAdapter(getActivity(), items){};
+                        listView.setAdapter(adapter);
                         listView.onRefreshComplete();
                     }
                 }, 2000);
@@ -126,8 +129,6 @@ public class NearbyFragment extends Fragment {
         adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
         listView.setAdapter(adapter);
 
-        // Request the adapter to load the data
-        adapter.loadData();
 
         // click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -211,13 +212,10 @@ public class NearbyFragment extends Fragment {
 
                                     String profilePic_url = jObject.getString("portrait_url");
                                     item.setProfilePic(profilePic_url);
-
-
-//                                    try{
-//                                        Thread.sleep(1000);
-//                                    } catch (InterruptedException e) {
-//                                        e.printStackTrace();
-//                                    }
+                                    items.add(item);
+                                    Collections.sort(items);
+                                    if (adapter != null)
+                                        adapter.notifyDataSetChanged();
 
                                 } catch (JSONException j) {
                                     System.out.println("JSON Error");
@@ -228,9 +226,8 @@ public class NearbyFragment extends Fragment {
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                             }
                         });
-                        items.add(item);
                     }
-                    ;
+
                 } catch (JSONException j) {
                     System.out.println("JSON Error");
                 }

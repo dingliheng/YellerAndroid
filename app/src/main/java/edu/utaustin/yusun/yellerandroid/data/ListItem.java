@@ -1,9 +1,13 @@
 package edu.utaustin.yusun.yellerandroid.data;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by yusun on 11/15/15.
  */
-public class ListItem {
+public class ListItem implements Comparable<ListItem>{
     private int id;
     private String name, status, image, profilePic, timeStamp, yeller_id;
 
@@ -23,6 +27,8 @@ public class ListItem {
         this.yeller_id = yeller_id;
 
     }
+
+
 
     public int getId() {
         return id;
@@ -80,4 +86,22 @@ public class ListItem {
         this.yeller_id = yeller_id;
     }
 
+    @Override
+    public int compareTo(ListItem another) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date myDate = null, anotherDate = null;
+        try {
+            myDate = format.parse(timeStamp);
+            anotherDate = format.parse(another.getTimeStamp());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (myDate.after(anotherDate))
+            return -1;
+        else if (myDate.equals(anotherDate))
+            return 0;
+        else
+            return 1;
+
+    }
 }
