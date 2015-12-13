@@ -113,6 +113,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         Picasso.with(mContext).load(record.getImage()).into(holder.feedImageView);
 
         if (convertView == null) {
+
             final LinearLayout reply = (LinearLayout) rowView.findViewById(R.id.reply);
 
             String comment_url = "http://socialyeller.appspot.com/android_comment";
@@ -129,8 +130,6 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
                         JSONArray authors_json = jObject.getJSONArray("authors");
                         JSONArray comments_json = jObject.getJSONArray("comments");
                         for (int i = 0; i < authors_json.length(); i++) {
-//                            authors.add(authors_json.getString(i));
-//                            comments.add(comments_json.getString(i));
                             inflater.inflate(R.layout.comment, reply, true);
                             TextView comment = (TextView) reply.findViewById(R.id.comment_content);
                             TextView comment_owner = (TextView) reply.findViewById(R.id.comment_owner);
@@ -147,6 +146,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
 
                 }
             });
+
         }
 
         rowView.findViewById(R.id.comment_btn).setOnClickListener(new View.OnClickListener() {
