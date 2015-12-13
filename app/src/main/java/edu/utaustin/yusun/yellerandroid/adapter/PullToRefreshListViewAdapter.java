@@ -104,15 +104,19 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         holder.statusMsg.setText(record.getStatus());
 
         Picasso.with(mContext).load(record.getProfilePic()).into(holder.profilePic);
-        Picasso.with(mContext).load(record.getImage()).into(holder.feedImageView);
+
+        if (record.getImage() != null) {
+            Picasso.with(mContext).load(record.getImage()).into(holder.feedImageView);
+        } else {
+            holder.feedImageView.setVisibility(View.INVISIBLE);
+        }
+
 
         if (convertView == null) {
 
             final LinearLayout reply = (LinearLayout) rowView.findViewById(R.id.reply);
 
             String comment_url = "http://socialyeller.appspot.com/android_comment";
-//            final ArrayList<String> authors = new ArrayList<String>();
-//            final ArrayList<String> comments = new ArrayList<String>();
             RequestParams params = new RequestParams();
             params.put("yeller_id", feed_id);
             AsyncHttpClient httpClient = new AsyncHttpClient();

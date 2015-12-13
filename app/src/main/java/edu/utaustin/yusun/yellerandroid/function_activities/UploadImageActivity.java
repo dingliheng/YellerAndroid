@@ -58,7 +58,7 @@ public class UploadImageActivity extends Activity {
         activity = intent.getStringExtra("activity");
         BootstrapThumbnail imageView = (BootstrapThumbnail) findViewById(R.id.imageView);
         imageView.setImageBitmap(bitmap);
-        upload_url=getUploadURL();
+        upload_url = getUploadURL();
     }
 
     //upload image button action
