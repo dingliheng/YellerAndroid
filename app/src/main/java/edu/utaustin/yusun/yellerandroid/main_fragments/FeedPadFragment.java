@@ -91,9 +91,13 @@ public class FeedPadFragment extends Fragment {
                 selectImage();
             }
         });
+        listView = (PullToRefreshListView) rootView.findViewById(R.id.pull_to_refresh_listview);
         if (items == null)
             initializeItems();
-        listView = (PullToRefreshListView) rootView.findViewById(R.id.pull_to_refresh_listview);
+
+        adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
+        listView.setAdapter(adapter);
+
 
         // OPTIONAL: Disable scrolling when list is refreshing
         // listView.setLockScrollWhileRefreshing(false);
@@ -118,7 +122,8 @@ public class FeedPadFragment extends Fragment {
             public void onRefresh() {
 
                 initializeItems();
-                adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
+                adapter = new PullToRefreshListViewAdapter(getActivity(), items) {
+                };
                 listView.setAdapter(adapter);
 
                 listView.postDelayed(new Runnable() {
@@ -131,8 +136,7 @@ public class FeedPadFragment extends Fragment {
             }
         });
 
-        adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
-        listView.setAdapter(adapter);
+
 
         // click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -145,7 +149,6 @@ public class FeedPadFragment extends Fragment {
                 if (viewHolder.name != null) {
                     Intent intent = new Intent(getContext(), FriendPageActivity.class);
                     intent.putExtra("userName", (String) viewHolder.name.getText());
-                    System.out.println("userName: "+ viewHolder.name.getText());
                     startActivity(intent);
                 }
             }
@@ -176,12 +179,11 @@ public class FeedPadFragment extends Fragment {
                     //initialize Items
                     String findyeller_url = "http://socialyeller.appspot.com/android_findyeller";
                     RequestParams newparams = new RequestParams();
-                    System.out.println("length "+yellers_key_ids.size());
+                    System.out.println("length " + yellers_key_ids.size());
                     for (int i = 0; i <  yellers_key_ids.size(); i++){
                         final ListItem item = new ListItem();
                         newparams.put("yeller_id", yellers_key_ids.get(i));
                         item.setYeller_id(yellers_key_ids.get(i));
-                        final int j = i;
                         AsyncHttpClient newhttpClient = new AsyncHttpClient();
                         newhttpClient.get(findyeller_url, newparams, new AsyncHttpResponseHandler() {
                             @Override
@@ -215,12 +217,7 @@ public class FeedPadFragment extends Fragment {
                                     String profilePic_url = jObject.getString("portrait_url");
                                     item.setProfilePic(profilePic_url);
 
-
-//                                    try{
-//                                        Thread.sleep(1000);
-//                                    } catch (InterruptedException e) {
-//                                        e.printStackTrace();
-//                                    }
+                                    adapter.notifyDataSetChanged();
 
                                 } catch (JSONException j) {
                                     System.out.println("JSON Error");

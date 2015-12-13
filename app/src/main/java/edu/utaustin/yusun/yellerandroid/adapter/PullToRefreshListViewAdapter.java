@@ -103,7 +103,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         holder.timestamp.setText(record.getTimeStamp()); // need to modify the time to the elapse time
         holder.statusMsg.setText(record.getStatus());
 
-        if (holder.name.getText().equals("secret man")){
+        if (holder.name.getText().equals("Anonymous")){
             holder.profilePic.setImageResource(R.mipmap.mask);
         }else {
             Picasso.with(mContext).load(record.getProfilePic()).into(holder.profilePic);

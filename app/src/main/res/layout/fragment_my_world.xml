@@ -40,6 +40,7 @@
                 />
 
             <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+                android:id="@+id/avatar"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:layout_centerInParent="true"

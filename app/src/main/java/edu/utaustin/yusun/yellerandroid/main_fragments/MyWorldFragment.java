@@ -19,10 +19,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 
+import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,10 +43,9 @@ import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 import edu.utaustin.yusun.yellerandroid.data.ListItem;
 import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
+import edu.utaustin.yusun.yellerandroid.function_activities.SearchDialog;
 import edu.utaustin.yusun.yellerandroid.function_activities.UploadImageActivity;
 import edu.utaustin.yusun.yellerandroid.login_register.LoginActivity;
-import edu.utaustin.yusun.yellerandroid.function_activities.SearchDialog;
-import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,10 +70,10 @@ public class MyWorldFragment extends Fragment implements
     private PullToRefreshListViewAdapter adapter;
 
     private String user_email = MainActivity.user_email;
-
-
+    private String avatar_url;
+    BootstrapCircleThumbnail avatar_view;
     //Data to show
-    ArrayList<ListItem> items = new ArrayList<>();
+    ArrayList<ListItem> items;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -114,16 +115,26 @@ public class MyWorldFragment extends Fragment implements
         rootView.findViewById(R.id.add_friend_btn).setOnClickListener(this);
         rootView.findViewById(R.id.change_avatar_btn).setOnClickListener(this);
         rootView.findViewById(R.id.logoff_btn).setOnClickListener(this);
-
-        initializeItems();
+        avatar_view = (BootstrapCircleThumbnail) rootView.findViewById(R.id.avatar);
         listView = (PullToRefreshListView) rootView.findViewById(R.id.pull_to_refresh_listview);
+
+        //Initialize the items
+        if (items == null)
+            initializeItems();
+
+        adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
+        listView.setAdapter(adapter);
 
         listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 
             @Override
             public void onRefresh() {
 
-                adapter.loadData();
+                initializeItems();
+                adapter = new PullToRefreshListViewAdapter(getActivity(), items) {
+                };
+                listView.setAdapter(adapter);
+
                 listView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -132,13 +143,6 @@ public class MyWorldFragment extends Fragment implements
                 }, 2000);
             }
         });
-
-
-        adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
-        listView.setAdapter(adapter);
-
-        // Request the adapter to load the data
-        adapter.loadData();
 
         // click listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -161,6 +165,7 @@ public class MyWorldFragment extends Fragment implements
     }
 
     private void initializeItems() {
+        items = new ArrayList<>();
         String feed_url = "http://socialyeller.appspot.com/android_myworld";
         RequestParams params = new RequestParams();
         final ArrayList<String> yellers_key_ids = new ArrayList<String>();
@@ -180,10 +185,10 @@ public class MyWorldFragment extends Fragment implements
                     String findyeller_url = "http://socialyeller.appspot.com/android_findyeller";
                     RequestParams newparams = new RequestParams();
                     System.out.println("length "+yellers_key_ids.size());
-                    for (int i = 0; i <  yellers_key_ids.size(); i++){
+                    for (int i = 0; i <  yellers_key_ids.size(); i++) {
                         final ListItem item = new ListItem();
                         newparams.put("yeller_id", yellers_key_ids.get(i));
-                        final int j = i;
+
                         AsyncHttpClient newhttpClient = new AsyncHttpClient();
                         newhttpClient.get(findyeller_url, newparams, new AsyncHttpResponseHandler() {
                             @Override
@@ -192,35 +197,34 @@ public class MyWorldFragment extends Fragment implements
                                     //An item of data
                                     JSONObject jObject = new JSONObject(new String(responseBody));
                                     String name = jObject.getString("fullname");
-//                                    System.out.println("item" + j + " name:" + name);
                                     item.setName(name);
 
                                     String timestamp = jObject.getString("date");
-//                                    System.out.println(timestamp);
                                     item.setTimeStamp(timestamp);
 
                                     String statusMsg = jObject.getString("content");
-//                                    System.out.println(statusMsg);
                                     item.setStatus(statusMsg);
 
                                     JSONArray picture_urls_json = jObject.getJSONArray("picture_urls");
                                     ArrayList<String> picture_urls = new ArrayList<String>();
                                     for (int i = 0; i < picture_urls_json.length(); i++) {
                                         picture_urls.add(picture_urls_json.getString(i));
-//                                        System.out.println(picture_urls_json.getString(i));
                                     }
                                     if (picture_urls.size() > 0) {
                                         String feedImageView_url = picture_urls.get(0);
-//                                        System.out.println(feedImageView_url);
                                         item.setImage(feedImageView_url);
                                     }
 
 
                                     String profilePic_url = jObject.getString("portrait_url");
-//                                    System.out.println("item" + j + " profilePic_url:" + profilePic_url);
                                     item.setProfilePic(profilePic_url);
 
+                                    if (avatar_url == null) {
+                                        avatar_url = profilePic_url;
+                                        Picasso.with(getContext()).load(avatar_url).into(avatar_view);
+                                    }
                                     items.add(item);
+                                    adapter.notifyDataSetChanged();
 
                                 } catch (JSONException j) {
                                     System.out.println("JSON Error");
@@ -251,6 +255,7 @@ public class MyWorldFragment extends Fragment implements
         switch (v.getId()) {
             case R.id.connections_btn:
                 Intent intent = new Intent(getContext(), FriendListActivity.class);
+                intent.putExtra("activity", "Connections");
                 startActivity(intent);
                 break;
             case R.id.add_friend_btn:
