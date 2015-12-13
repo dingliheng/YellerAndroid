@@ -189,7 +189,9 @@ public class FeedPadFragment extends Fragment {
                     RequestParams newparams = new RequestParams();
                     System.out.println("length "+yellers_key_ids.size());
                     for (int i = 0; i <  yellers_key_ids.size(); i++){
+                        final ListItem item = new ListItem();
                         newparams.put("yeller_id", yellers_key_ids.get(i));
+                        item.setYeller_id(yellers_key_ids.get(i));
                         final int j = i;
                         AsyncHttpClient newhttpClient = new AsyncHttpClient();
                         newhttpClient.get(findyeller_url, newparams, new AsyncHttpResponseHandler() {
@@ -197,7 +199,7 @@ public class FeedPadFragment extends Fragment {
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 try {
                                     //An item of data
-                                    ListItem item = new ListItem();
+
                                     JSONObject jObject = new JSONObject(new String(responseBody));
                                     String name = jObject.getString("fullname");
 //                                    System.out.println("item" + j + " name:" + name);
@@ -228,7 +230,12 @@ public class FeedPadFragment extends Fragment {
 //                                    System.out.println("item" + j + " profilePic_url:" + profilePic_url);
                                     item.setProfilePic(profilePic_url);
 
-                                    items.add(item);
+
+//                                    try{
+//                                        Thread.sleep(1000);
+//                                    } catch (InterruptedException e) {
+//                                        e.printStackTrace();
+//                                    }
 
                                 } catch (JSONException j) {
                                     System.out.println("JSON Error");
@@ -239,6 +246,7 @@ public class FeedPadFragment extends Fragment {
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                             }
                         });
+                        items.add(item);
                     }
                     ;
                 } catch (JSONException j) {

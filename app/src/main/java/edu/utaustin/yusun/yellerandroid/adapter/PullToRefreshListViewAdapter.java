@@ -2,6 +2,8 @@ package edu.utaustin.yusun.yellerandroid.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +14,22 @@ import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapThumbnail;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
+import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.data.ListItem;
 import edu.utaustin.yusun.yellerandroid.function_activities.CommentDialog;
@@ -74,7 +89,7 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
 
         ListItem record = (ListItem) getItem(position);
 
-        LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
+        final LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
         ViewHolder viewHolder = new ViewHolder();
 
         if (convertView == null){
@@ -89,23 +104,49 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         }
 
         final ViewHolder holder = (ViewHolder) rowView.getTag();
-        final int feed_id = record.getId();
+        final String feed_id = record.getYeller_id();
         holder.name.setText(record.getName());
         holder.timestamp.setText(record.getTimeStamp()); // need to modify the time to the elapse time
         holder.statusMsg.setText(record.getStatus());
 
-        holder.profilePic.setImageResource(R.mipmap.avatar); //Pisacco
-
-        holder.feedImageView.setImageResource(R.mipmap.christmas);
+        Picasso.with(mContext).load(record.getProfilePic()).into(holder.profilePic);
+        Picasso.with(mContext).load(record.getImage()).into(holder.feedImageView);
 
         if (convertView == null) {
-            LinearLayout reply = (LinearLayout) rowView.findViewById(R.id.reply);
+            final LinearLayout reply = (LinearLayout) rowView.findViewById(R.id.reply);
 
-            for (int i = 0; i < 3; i++) {
-                inflater.inflate(R.layout.comment, reply, true);
-                TextView comment = (TextView) reply.findViewById(R.id.comment_content);
-                comment.setText("Love u");
-            }
+            String comment_url = "http://socialyeller.appspot.com/android_comment";
+//            final ArrayList<String> authors = new ArrayList<String>();
+//            final ArrayList<String> comments = new ArrayList<String>();
+            RequestParams params = new RequestParams();
+            params.put("yeller_id", feed_id);
+            AsyncHttpClient httpClient = new AsyncHttpClient();
+            httpClient.get(comment_url, params, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    try {
+                        JSONObject jObject = new JSONObject(new String(responseBody));
+                        JSONArray authors_json = jObject.getJSONArray("authors");
+                        JSONArray comments_json = jObject.getJSONArray("comments");
+                        for (int i = 0; i < authors_json.length(); i++) {
+//                            authors.add(authors_json.getString(i));
+//                            comments.add(comments_json.getString(i));
+                            inflater.inflate(R.layout.comment, reply, true);
+                            TextView comment = (TextView) reply.findViewById(R.id.comment_content);
+                            TextView comment_owner = (TextView) reply.findViewById(R.id.comment_owner);
+                            comment_owner.setText(authors_json.getString(i));
+                            comment.setText(comments_json.getString(i));
+                        }
+                    } catch (JSONException j) {
+                        System.out.println("JSON Error");
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                }
+            });
         }
 
         rowView.findViewById(R.id.comment_btn).setOnClickListener(new View.OnClickListener() {
@@ -118,4 +159,5 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         });
         return rowView;
     }
+
 }

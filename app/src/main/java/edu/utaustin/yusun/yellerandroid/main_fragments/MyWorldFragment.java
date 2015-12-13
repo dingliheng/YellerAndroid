@@ -20,6 +20,13 @@ import android.view.Window;
 import android.widget.AdapterView;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,14 +35,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 import edu.utaustin.yusun.yellerandroid.data.ListItem;
 import edu.utaustin.yusun.yellerandroid.friends_activities.FriendListActivity;
 import edu.utaustin.yusun.yellerandroid.function_activities.PullToRefreshListView;
 import edu.utaustin.yusun.yellerandroid.function_activities.UploadImageActivity;
-import edu.utaustin.yusun.yellerandroid.function_activities.SearchDialog;
 import edu.utaustin.yusun.yellerandroid.login_register.LoginActivity;
+import edu.utaustin.yusun.yellerandroid.function_activities.SearchDialog;
+import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,6 +67,8 @@ public class MyWorldFragment extends Fragment implements
     public static final String BITMAPIMAGE = "BitmapImage";
     private PullToRefreshListView listView;
     private PullToRefreshListViewAdapter adapter;
+
+    private String user_email = MainActivity.user_email;
 
 
     //Data to show
@@ -104,6 +115,7 @@ public class MyWorldFragment extends Fragment implements
         rootView.findViewById(R.id.change_avatar_btn).setOnClickListener(this);
         rootView.findViewById(R.id.logoff_btn).setOnClickListener(this);
 
+        initializeItems();
         listView = (PullToRefreshListView) rootView.findViewById(R.id.pull_to_refresh_listview);
 
         listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
@@ -120,6 +132,7 @@ public class MyWorldFragment extends Fragment implements
                 }, 2000);
             }
         });
+
 
         adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
         listView.setAdapter(adapter);
@@ -145,6 +158,92 @@ public class MyWorldFragment extends Fragment implements
         // Register the context menu for actions
         registerForContextMenu(listView);
         return rootView;
+    }
+
+    private void initializeItems() {
+        String feed_url = "http://socialyeller.appspot.com/android_myworld";
+        RequestParams params = new RequestParams();
+        final ArrayList<String> yellers_key_ids = new ArrayList<String>();
+        params.put("User_email", user_email);
+        AsyncHttpClient httpClient = new AsyncHttpClient();
+        httpClient.get(feed_url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    JSONObject jObject = new JSONObject(new String(responseBody));
+                    JSONArray key_ids_json = jObject.getJSONArray("yellers_key_ids");
+                    for (int i = 0; i < key_ids_json.length(); i++) {
+                        yellers_key_ids.add(key_ids_json.getString(i));
+                        System.out.println(key_ids_json.getString(i));
+                    }
+                    //initialize Items
+                    String findyeller_url = "http://socialyeller.appspot.com/android_findyeller";
+                    RequestParams newparams = new RequestParams();
+                    System.out.println("length "+yellers_key_ids.size());
+                    for (int i = 0; i <  yellers_key_ids.size(); i++){
+                        final ListItem item = new ListItem();
+                        newparams.put("yeller_id", yellers_key_ids.get(i));
+                        final int j = i;
+                        AsyncHttpClient newhttpClient = new AsyncHttpClient();
+                        newhttpClient.get(findyeller_url, newparams, new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                try {
+                                    //An item of data
+                                    JSONObject jObject = new JSONObject(new String(responseBody));
+                                    String name = jObject.getString("fullname");
+//                                    System.out.println("item" + j + " name:" + name);
+                                    item.setName(name);
+
+                                    String timestamp = jObject.getString("date");
+//                                    System.out.println(timestamp);
+                                    item.setTimeStamp(timestamp);
+
+                                    String statusMsg = jObject.getString("content");
+//                                    System.out.println(statusMsg);
+                                    item.setStatus(statusMsg);
+
+                                    JSONArray picture_urls_json = jObject.getJSONArray("picture_urls");
+                                    ArrayList<String> picture_urls = new ArrayList<String>();
+                                    for (int i = 0; i < picture_urls_json.length(); i++) {
+                                        picture_urls.add(picture_urls_json.getString(i));
+//                                        System.out.println(picture_urls_json.getString(i));
+                                    }
+                                    if (picture_urls.size() > 0) {
+                                        String feedImageView_url = picture_urls.get(0);
+//                                        System.out.println(feedImageView_url);
+                                        item.setImage(feedImageView_url);
+                                    }
+
+
+                                    String profilePic_url = jObject.getString("portrait_url");
+//                                    System.out.println("item" + j + " profilePic_url:" + profilePic_url);
+                                    item.setProfilePic(profilePic_url);
+
+                                    items.add(item);
+
+                                } catch (JSONException j) {
+                                    System.out.println("JSON Error");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            }
+                        });
+                        items.add(item);
+                    }
+                    ;
+                } catch (JSONException j) {
+                    System.out.println("JSON Error");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
     }
 
     @Override

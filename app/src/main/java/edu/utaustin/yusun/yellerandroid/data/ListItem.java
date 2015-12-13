@@ -5,7 +5,7 @@ package edu.utaustin.yusun.yellerandroid.data;
  */
 public class ListItem {
     private int id;
-    private String name, status, image, profilePic, timeStamp;
+    private String name, status, image, profilePic, timeStamp, yeller_id;
 
     public ListItem () {
 
@@ -20,6 +20,7 @@ public class ListItem {
         this.status = status;
         this.profilePic = profilePic;
         this.timeStamp = timeStamp;
+        this.yeller_id = yeller_id;
 
     }
 
@@ -69,6 +70,14 @@ public class ListItem {
 
     public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public String getYeller_id() {
+        return yeller_id;
+    }
+
+    public void setYeller_id(String yeller_id) {
+        this.yeller_id = yeller_id;
     }
 
 }

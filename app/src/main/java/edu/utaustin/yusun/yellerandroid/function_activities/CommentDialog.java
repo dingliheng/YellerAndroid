@@ -10,11 +10,19 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.BootstrapEditText;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import java.nio.channels.AsynchronousCloseException;
+
+import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
+import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
 
 /**
  * Created by yusun on 12/11/15.
@@ -22,9 +30,9 @@ import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 public class CommentDialog extends Dialog {
     private BootstrapEditText commment;
     private PullToRefreshListViewAdapter adapter;
-    private int feed_id;
+    private String feed_id;
 
-    public CommentDialog(Context context, int feed_id, PullToRefreshListViewAdapter adapter) {
+    public CommentDialog(Context context, String feed_id, PullToRefreshListViewAdapter adapter) {
         super(context);
         this.adapter = adapter;
         this.feed_id = feed_id;
@@ -50,6 +58,24 @@ public class CommentDialog extends Dialog {
 
                 if (actionId == EditorInfo.IME_ACTION_SEND && commment.getText().length() > 0) {
 
+                    RequestParams params = new RequestParams();
+                    String comment_url = "http://socialyeller.appspot.com/android_comment";
+                    params.put("yeller_id", feed_id);
+                    System.out.println("comment id: " + feed_id);
+                    params.put("User_email", MainActivity.user_email);
+                    params.put("comment",commment.getText());
+                    AsyncHttpClient httpClient = new AsyncHttpClient();
+                    httpClient.post(comment_url, params, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                        }
+                    });
+
                     adapter.notifyDataSetChanged();
                     dismiss();
                 }
@@ -65,7 +91,5 @@ public class CommentDialog extends Dialog {
                 }
             }
         });
-
-
     }
 }
