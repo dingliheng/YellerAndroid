@@ -117,6 +117,7 @@ public class FeedPadFragment extends Fragment {
             @Override
             public void onRefresh() {
 
+                initializeItems();
                 adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
                 listView.setAdapter(adapter);
 

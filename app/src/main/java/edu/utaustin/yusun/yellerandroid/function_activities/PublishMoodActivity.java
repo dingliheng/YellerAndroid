@@ -22,10 +22,13 @@ import com.squareup.seismic.ShakeDetector;
 import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
+import im.delight.android.location.SimpleLocation;
 
 public class PublishMoodActivity extends Activity implements ShakeDetector.Listener {
     Context context = this;
     BootstrapButton mood_button;
+
+    private SimpleLocation location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final String user_email = MainActivity.user_email;
@@ -33,9 +36,19 @@ public class PublishMoodActivity extends Activity implements ShakeDetector.Liste
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_mood);
 
+
+        // construct a new instance of SimpleLocation
+        location = new SimpleLocation(this);
+        // if we can't access the location yet
+        if (!location.hasLocationEnabled()) {
+            // ask the user to enable location access
+            SimpleLocation.openSettings(this);
+        }
+
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
         final BootstrapButtonGroup targetGroup = (BootstrapButtonGroup) findViewById(R.id.options);
         targetGroup.getChildAt(0).setSelected(true);
         //publish button action

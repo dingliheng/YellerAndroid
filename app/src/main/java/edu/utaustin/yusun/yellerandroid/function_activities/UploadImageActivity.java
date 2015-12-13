@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -30,17 +29,27 @@ import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.main_fragments.FeedPadFragment;
 import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
+import im.delight.android.location.SimpleLocation;
 
 public class UploadImageActivity extends Activity {
     private Bitmap bitmap;
     private String upload_url;
     private String activity;
     Context context = this;
-
+    private SimpleLocation location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_image);
+
+        // construct a new instance of SimpleLocation
+        location = new SimpleLocation(this);
+        // if we can't access the location yet
+        if (!location.hasLocationEnabled()) {
+            // ask the user to enable location access
+            SimpleLocation.openSettings(this);
+        }
+
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
