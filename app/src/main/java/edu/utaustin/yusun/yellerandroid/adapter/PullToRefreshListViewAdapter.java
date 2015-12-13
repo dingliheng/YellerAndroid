@@ -132,7 +132,9 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
                             TextView comment = (TextView) reply.getChildAt(i).findViewById(R.id.comment_content);
                             TextView comment_owner = (TextView) reply.getChildAt(i).findViewById(R.id.comment_owner);
                             comment_owner.setText(authors_json.getString(i));
+                            System.out.println("comment author: " + authors_json.getString(i));
                             comment.setText(comments_json.getString(i));
+                            System.out.println("comment content: "+comments_json.getString(i));
                         }
                     } catch (JSONException j) {
                         System.out.println("JSON Error");

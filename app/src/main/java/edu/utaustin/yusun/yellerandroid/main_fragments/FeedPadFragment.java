@@ -209,7 +209,6 @@ public class FeedPadFragment extends Fragment {
                                         item.setImage(feedImageView_url);
                                     }
 
-
                                     String profilePic_url = jObject.getString("portrait_url");
                                     item.setProfilePic(profilePic_url);
 
