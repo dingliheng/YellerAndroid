@@ -46,6 +46,7 @@ public class FriendPageActivity extends Activity implements
         findViewById(R.id.follow_btn).setOnClickListener(this);
 
         friendName = getIntent().getStringExtra("userName");
+        System.err.println("FriendPage: " + friendName);
         initializeItems(friendName);
 
         listView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_listview);
