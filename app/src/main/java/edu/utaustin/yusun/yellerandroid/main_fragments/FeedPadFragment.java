@@ -145,6 +145,7 @@ public class FeedPadFragment extends Fragment {
                 if (viewHolder.name != null) {
                     Intent intent = new Intent(getContext(), FriendPageActivity.class);
                     intent.putExtra("userName", (String) viewHolder.name.getText());
+                    System.out.println("userName: "+ viewHolder.name.getText());
                     startActivity(intent);
                 }
             }
@@ -189,6 +190,8 @@ public class FeedPadFragment extends Fragment {
                                     //An item of data
 
                                     JSONObject jObject = new JSONObject(new String(responseBody));
+                                    String anonymity = jObject.getString("anonymity");
+
                                     String name = jObject.getString("fullname");
                                     item.setName(name);
 

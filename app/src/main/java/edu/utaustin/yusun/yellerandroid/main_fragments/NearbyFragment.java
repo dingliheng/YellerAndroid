@@ -11,9 +11,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.PullToRefreshListViewAdapter;
 import edu.utaustin.yusun.yellerandroid.data.ListItem;
@@ -94,6 +102,9 @@ public class NearbyFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_nearby, container, false);
+
+        if (items == null)
+            initializeItems();
         listView = (PullToRefreshListView) rootView.findViewById(R.id.pull_to_refresh_listview);
 
         listView.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
@@ -101,6 +112,7 @@ public class NearbyFragment extends Fragment {
             @Override
             public void onRefresh() {
 
+                initializeItems();
                 adapter.loadData();
                 listView.postDelayed(new Runnable() {
                     @Override
@@ -138,6 +150,97 @@ public class NearbyFragment extends Fragment {
         // Register the context menu for actions
         registerForContextMenu(listView);
         return rootView;
+    }
+
+    private void initializeItems() {
+        items = new ArrayList<>();
+        String feed_url = "http://socialyeller.appspot.com/android_nearby";
+        RequestParams params = new RequestParams();
+        final ArrayList<String> yellers_key_ids = new ArrayList<String>();
+        params.put("latitude", location.getLatitude());
+        params.put("longitude", location.getLongitude());
+        AsyncHttpClient httpClient = new AsyncHttpClient();
+        httpClient.get(feed_url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    JSONObject jObject = new JSONObject(new String(responseBody));
+                    JSONArray key_ids_json = jObject.getJSONArray("yellers_key_ids");
+                    for (int i = 0; i < key_ids_json.length(); i++) {
+                        yellers_key_ids.add(key_ids_json.getString(i));
+                        System.out.println(key_ids_json.getString(i));
+                    }
+                    //initialize Items
+                    String findyeller_url = "http://socialyeller.appspot.com/android_findyeller";
+                    RequestParams newparams = new RequestParams();
+                    System.out.println("length " + yellers_key_ids.size());
+                    for (int i = 0; i < yellers_key_ids.size(); i++) {
+                        final ListItem item = new ListItem();
+                        newparams.put("yeller_id", yellers_key_ids.get(i));
+                        item.setYeller_id(yellers_key_ids.get(i));
+                        final int j = i;
+                        AsyncHttpClient newhttpClient = new AsyncHttpClient();
+                        newhttpClient.get(findyeller_url, newparams, new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                try {
+                                    //An item of data
+
+                                    JSONObject jObject = new JSONObject(new String(responseBody));
+                                    String anonymity = jObject.getString("anonymity");
+
+                                    String name = jObject.getString("fullname");
+                                    item.setName(name);
+
+                                    String timestamp = jObject.getString("date");
+                                    item.setTimeStamp(timestamp);
+
+                                    String statusMsg = jObject.getString("content");
+                                    item.setStatus(statusMsg);
+
+                                    JSONArray picture_urls_json = jObject.getJSONArray("picture_urls");
+                                    ArrayList<String> picture_urls = new ArrayList<String>();
+                                    for (int i = 0; i < picture_urls_json.length(); i++) {
+                                        picture_urls.add(picture_urls_json.getString(i));
+                                    }
+
+                                    if (picture_urls.size() > 0) {
+                                        String feedImageView_url = picture_urls.get(0);
+                                        item.setImage(feedImageView_url);
+                                    }
+
+                                    String profilePic_url = jObject.getString("portrait_url");
+                                    item.setProfilePic(profilePic_url);
+
+
+//                                    try{
+//                                        Thread.sleep(1000);
+//                                    } catch (InterruptedException e) {
+//                                        e.printStackTrace();
+//                                    }
+
+                                } catch (JSONException j) {
+                                    System.out.println("JSON Error");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            }
+                        });
+                        items.add(item);
+                    }
+                    ;
+                } catch (JSONException j) {
+                    System.out.println("JSON Error");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
     }
 
 

@@ -12,7 +12,7 @@ public class ListItem {
     }
 
     public ListItem(int id, String name, String image, String status,
-                    String profilePic, String timeStamp, String url) {
+                    String profilePic, String timeStamp, String yeller_id, String url) {
         super();
         this.id = id;
         this.name = name;

@@ -72,6 +72,8 @@ public class UploadImageActivity extends Activity {
         final String user_email = MainActivity.user_email;
         params.put("User_email", user_email);
         params.put("activity", activity);
+        params.put("latitude", location.getLatitude());
+        params.put("longitude", location.getLongitude());
 
 
         if (activity.equals("FeedPad")) {

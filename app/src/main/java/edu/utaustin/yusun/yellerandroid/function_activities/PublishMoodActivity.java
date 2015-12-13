@@ -74,6 +74,8 @@ public class PublishMoodActivity extends Activity implements ShakeDetector.Liste
                 params.put("to:", to_whom);
                 params.put("content", yeller_content);
                 params.put("is_Anonynmous", anonymous);
+                params.put("latitude", location.getLatitude());
+                params.put("longitude", location.getLongitude());
 
                 String pulibshMood_url = "http://socialyeller.appspot.com/android_publishmood";
                 AsyncHttpClient httpClient = new AsyncHttpClient();

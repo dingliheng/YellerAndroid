@@ -47,6 +47,7 @@ public class FriendPageActivity extends Activity implements
 
         friendName = getIntent().getStringExtra("userName");
         System.err.println("FriendPage: " + friendName);
+        System.out.println("friend name: "+ friendName);
         initializeItems(friendName);
 
         listView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_listview);
@@ -90,6 +91,7 @@ public class FriendPageActivity extends Activity implements
 
     //Initialize the items data to show.
     private void initializeItems(String friendName) {
+//        System.out.println("friendName: "+friendName);
         String feed_url = "http://socialyeller.appspot.com/android_friendpage";
         RequestParams params = new RequestParams();
         final ArrayList<String> yellers_key_ids = new ArrayList<String>();
