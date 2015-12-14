@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -83,6 +82,7 @@ public class PublishMoodActivity extends Activity implements ShakeDetector.Liste
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                         Toast.makeText(context, "Upload Successful", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
 
                     @Override
@@ -98,7 +98,7 @@ public class PublishMoodActivity extends Activity implements ShakeDetector.Liste
     }
     @Override
     public void hearShake() {
-        Toast.makeText(this, "Don't shake me, bro!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Shake to send!", Toast.LENGTH_SHORT).show();
         mood_button.performClick();
     }
 

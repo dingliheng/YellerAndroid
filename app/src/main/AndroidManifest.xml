@@ -39,8 +39,6 @@
         </activity>
         <activity android:name=".function_activities.PublishMoodActivity" >
         </activity>
-        <activity android:name=".friends_activities.SearchFriendActivity" >
-        </activity>
         <activity android:name=".friends_activities.FriendListActivity" >
         </activity>
         <activity

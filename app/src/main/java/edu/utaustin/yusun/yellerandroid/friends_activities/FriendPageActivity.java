@@ -196,7 +196,8 @@ public class FriendPageActivity extends Activity implements
                 newhttpClient.get(findyeller_url, params, new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                        Toast.makeText(FriendPageActivity.this, "Follow Successfully", Toast.LENGTH_SHORT).show();
+                        findViewById(R.id.follow_btn).setEnabled(false);
                     }
 
                     @Override

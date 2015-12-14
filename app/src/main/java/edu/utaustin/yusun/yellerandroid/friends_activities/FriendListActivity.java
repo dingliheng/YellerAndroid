@@ -3,8 +3,9 @@ package edu.utaustin.yusun.yellerandroid.friends_activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -20,7 +21,6 @@ import cz.msebera.android.httpclient.Header;
 import edu.utaustin.yusun.yellerandroid.R;
 import edu.utaustin.yusun.yellerandroid.adapter.FriendInfoAdapter;
 import edu.utaustin.yusun.yellerandroid.data.FriendInfoItem;
-import edu.utaustin.yusun.yellerandroid.data.ListItem;
 import edu.utaustin.yusun.yellerandroid.main_fragments.MainActivity;
 
 public class FriendListActivity extends Activity {
@@ -36,9 +36,21 @@ public class FriendListActivity extends Activity {
         activity = intent.getStringExtra("activity");
         initializeItems();
 
+        System.err.println("Size of friends: " + friendItems.size());
         friendListArrayAdapter = new FriendInfoAdapter(this, friendItems);
-        ListView stringListView = (ListView) findViewById(R.id.listViewId);
-        stringListView.setAdapter(friendListArrayAdapter);
+        ListView friendListView = (ListView) findViewById(R.id.listViewId);
+        friendListView.setAdapter(friendListArrayAdapter);
+        friendListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FriendInfoAdapter.ViewHolder viewHolder = (FriendInfoAdapter.ViewHolder) view.getTag();
+                if (viewHolder.name != null) {
+                    Intent intent = new Intent(FriendListActivity.this, FriendPageActivity.class);
+                    intent.putExtra("userName", (String) viewHolder.name.getText());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     private void initializeItems() {
@@ -74,6 +86,9 @@ public class FriendListActivity extends Activity {
                             System.out.println(timeStamp);
                             item.setTimeStamp(timeStamp);
                             friendItems.add(item);
+                            if (friendListArrayAdapter != null)
+                                friendListArrayAdapter.notifyDataSetChanged();
+
                         } else {
                             System.out.println("This friend is not existent");
                         }
@@ -124,16 +139,13 @@ public class FriendListActivity extends Activity {
 
                                     if (isVaild) {
                                         name = jObject.getString("fullname");
-                                        System.out.println(name);
                                         status = jObject.getString("status");
-                                        System.out.println(status);
                                         profilePic = jObject.getString("portrait_url");
-                                        System.out.println(profilePic);
                                         timeStamp = jObject.getString("timestamp");
-                                        System.out.println(timeStamp);
                                         final FriendInfoItem item = new FriendInfoItem(name, status, profilePic, timeStamp);
                                         friendItems.add(item);
-                                        System.out.println("balabala: " + friendItems.get(0).getName());
+                                        if (friendListArrayAdapter != null)
+                                            friendListArrayAdapter.notifyDataSetChanged();
                                     } else {
                                         System.out.println("This friend is not existent");
                                     }
@@ -155,4 +167,5 @@ public class FriendListActivity extends Activity {
             });
         }
     }
+
 }

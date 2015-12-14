@@ -3,6 +3,8 @@ package edu.utaustin.yusun.yellerandroid.login_register;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -31,6 +33,7 @@ public class RegisterActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        Bitmap default_avatar = BitmapFactory.decodeResource(getResources(), R.mipmap.default_profile);
 
         //Register Button
         final BootstrapButton register_button = (BootstrapButton) findViewById(R.id.btnRegister);
