@@ -1,12 +1,15 @@
 package edu.utaustin.yusun.yellerandroid.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -19,6 +22,7 @@ import edu.utaustin.yusun.yellerandroid.data.FriendInfoItem;
 public class FriendInfoAdapter extends ArrayAdapter {
     private LayoutInflater inflater;
     private ArrayList<FriendInfoItem> items = new ArrayList<>();
+    private Context mContext;
 
     public FriendInfoAdapter(Activity activity,  ArrayList<FriendInfoItem> items){
         super(activity, R.layout.search_result_layout, items);
@@ -66,8 +70,9 @@ public class FriendInfoAdapter extends ArrayAdapter {
         }
 
         holder.name.setText(items.get(position).getName());
-        holder.avatar.setImageResource(R.mipmap.avatar);
+//        holder.avatar.setImageResource(R.mipmap.avatar);
         holder.latest_tweet.setText(items.get(position).getStatus());
+        Picasso.with(mContext).load(items.get(position).getProfilePic()).into(holder.avatar);
         holder.timestamp.setText(items.get(position).getTimeStamp());
 
         return convertView;

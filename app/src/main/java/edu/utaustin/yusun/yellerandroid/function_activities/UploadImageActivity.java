@@ -85,12 +85,12 @@ public class UploadImageActivity extends Activity {
         client.post(upload_url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Toast.makeText(context, "Upload Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Upload Successful", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Toast.makeText(context, "Upload Unsuccessfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Upload Unsuccessful", Toast.LENGTH_SHORT).show();
             }
         });
     }

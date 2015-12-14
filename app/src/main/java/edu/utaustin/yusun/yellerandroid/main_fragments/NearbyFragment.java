@@ -215,6 +215,11 @@ public class NearbyFragment extends Fragment {
                                     if (adapter != null)
                                         adapter.notifyDataSetChanged();
 
+//                                    try{
+//                                        Thread.sleep(1000);
+//                                    } catch (InterruptedException e) {
+//                                        e.printStackTrace();
+//                                    }
 
                                 } catch (JSONException j) {
                                     System.out.println("JSON Error");

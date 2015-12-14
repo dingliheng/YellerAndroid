@@ -106,7 +106,11 @@ public abstract class PullToRefreshListViewAdapter extends android.widget.BaseAd
         if (holder.name.getText().equals("Anonymous")){
             holder.profilePic.setImageResource(R.mipmap.mask);
         }else {
-            Picasso.with(mContext).load(record.getProfilePic()).into(holder.profilePic);
+            if (record.getProfilePic() != null){
+                Picasso.with(mContext).load(record.getProfilePic()).into(holder.profilePic);
+            }else {
+                holder.profilePic.setImageResource(R.mipmap.default_profile);
+            }
         }
 
         if (record.getImage() != null) {
