@@ -86,6 +86,7 @@ public class UploadImageActivity extends Activity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Toast.makeText(context, "Upload Successful", Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override
