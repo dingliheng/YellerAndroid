@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,9 +34,10 @@ public class FriendPageActivity extends Activity implements
     private PullToRefreshListView listView;
     private PullToRefreshListViewAdapter adapter;
     private String friendName;
-
+    private String avatar_url;
+    BootstrapCircleThumbnail avatar_view;
     //Data to show
-    ArrayList<ListItem> items = new ArrayList<>();
+    ArrayList<ListItem> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +48,14 @@ public class FriendPageActivity extends Activity implements
         //Add listeners to buttons
         findViewById(R.id.back_btn).setOnClickListener(this);
         findViewById(R.id.follow_btn).setOnClickListener(this);
-
+        avatar_view = (BootstrapCircleThumbnail) findViewById(R.id.friend_avatar);
         friendName = getIntent().getStringExtra("userName");
         System.err.println("FriendPage: " + friendName);
         System.out.println("friend name: " + friendName);
         initializeItems(friendName);
+
+        if (avatar_url != null)
+            Picasso.with(this).load(avatar_url).into(avatar_view);
 
         listView = (PullToRefreshListView) findViewById(R.id.pull_to_refresh_listview);
 
@@ -96,6 +102,7 @@ public class FriendPageActivity extends Activity implements
     //Initialize the items data to show.
     private void initializeItems(String friendName) {
 //        System.out.println("friendName: "+friendName);
+        items = new ArrayList<>();
         String feed_url = "http://socialyeller.appspot.com/android_friendpage";
         RequestParams params = new RequestParams();
         final ArrayList<String> yellers_key_ids = new ArrayList<String>();
@@ -149,6 +156,11 @@ public class FriendPageActivity extends Activity implements
 
                                     String profilePic_url = jObject.getString("portrait_url");
                                     item.setProfilePic(profilePic_url);
+
+                                    if (avatar_url == null) {
+                                        avatar_url = profilePic_url;
+                                        Picasso.with(FriendPageActivity.this).load(avatar_url).into(avatar_view);
+                                    }
 
                                     items.add(item);
                                     Collections.sort(items);

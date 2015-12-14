@@ -187,7 +187,7 @@ public class MyWorldFragment extends Fragment implements
                     //initialize Items
                     String findyeller_url = "http://socialyeller.appspot.com/android_findyeller";
                     RequestParams newparams = new RequestParams();
-                    System.out.println("length "+yellers_key_ids.size());
+                    System.out.println("length " + yellers_key_ids.size());
                     for (int i = 0; i <  yellers_key_ids.size(); i++) {
                         final ListItem item = new ListItem();
                         newparams.put("yeller_id", yellers_key_ids.get(i));
@@ -223,6 +223,7 @@ public class MyWorldFragment extends Fragment implements
 
                                     if (avatar_url == null) {
                                         avatar_url = profilePic_url;
+                                        Picasso.with(getContext()).load(avatar_url).into(avatar_view);
                                     }
 
                                     items.add(item);
@@ -241,8 +242,6 @@ public class MyWorldFragment extends Fragment implements
                         });
 
                     }
-                    adapter = new PullToRefreshListViewAdapter(getActivity(), items) {};
-                    listView.setAdapter(adapter);
 
                 } catch (JSONException j) {
                     System.out.println("JSON Error");

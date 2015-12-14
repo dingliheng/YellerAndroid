@@ -33,11 +33,12 @@
 
 
             <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+                android:id="@+id/friend_avatar"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:layout_centerInParent="true"
                 android:padding="0dp"
-                android:src="@mipmap/avatar"
+                android:src="@mipmap/default_profile"
                 app:bootstrapBrand="danger"
                 app:hasBorder="true"
                 />

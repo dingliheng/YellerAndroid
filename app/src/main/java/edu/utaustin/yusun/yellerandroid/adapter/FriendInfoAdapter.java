@@ -27,6 +27,7 @@ public class FriendInfoAdapter extends ArrayAdapter {
     public FriendInfoAdapter(Activity activity,  ArrayList<FriendInfoItem> items){
         super(activity, R.layout.search_result_layout, items);
         inflater = activity.getWindow().getLayoutInflater();
+        mContext = getContext();
         this.items = items;
     }
 
