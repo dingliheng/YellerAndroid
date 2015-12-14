@@ -146,7 +146,7 @@ public class NearbyFragment extends Fragment {
         });
         TextView textView = (TextView) rootView.findViewById(R.id.location);
         String locationTxt = "latitude: " + location.getLatitude() + "longitude: " + location.getLongitude();
-        textView.setText(locationTxt);
+//        textView.setText(locationTxt);
 
         // Register the context menu for actions
         registerForContextMenu(listView);
